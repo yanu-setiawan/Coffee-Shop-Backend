@@ -64,13 +64,6 @@ const updatePromo = async (req, res) => {
   try {
     const { params, body } = req;
     const result = await promoModel.updatePromo(params, body);
-    if (result.rows.length === 0) {
-      res.status(404).json({
-        data: result.rows,
-        msg: "Promo not found",
-      });
-      return;
-    }
     res.status(201).json({
       data: result.rows,
       msg: "Update Promo Success",

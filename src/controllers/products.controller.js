@@ -65,13 +65,6 @@ const updateProducts = async (req, res) => {
   try {
     const { params, body } = req;
     const result = await productsModel.updateProducts(params, body);
-    if (result.rows.length === 0) {
-      res.status(404).json({
-        data: result.rows,
-        msg: "Product not found",
-      });
-      return;
-    }
     res.status(201).json({
       data: result.rows,
       msg: "Update Product Success",

@@ -64,13 +64,6 @@ const updateUser = async (req, res) => {
   try {
     const { params, body } = req;
     const result = await usersModel.updateUser(params, body);
-    if (result.rows.length === 0) {
-      res.status(404).json({
-        data: result.rows,
-        msg: "User not found",
-      });
-      return;
-    }
     res.status(201).json({
       data: result.rows,
       msg: "Update User Success",
