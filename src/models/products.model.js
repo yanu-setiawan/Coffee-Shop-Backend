@@ -56,7 +56,7 @@ const insertProducts = (data) => {
 const updateProducts = (params, body) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "UPDATE products SET name_product = $1, price = $2, category_id= $3 WHERE id = $4";
+      "UPDATE products SET name_product = $1, price = $2, category_id= $3 WHERE id = $4 RETURNING*";
     const values = [body.name_product, body.price, body.category_id, params.id];
     db.query(sql, values, (err, result) => {
       if (err) return reject(err);
@@ -67,7 +67,7 @@ const updateProducts = (params, body) => {
 
 const deleteProducts = (d) => {
   return new Promise((resolve, reject) => {
-    const sql = "DELETE FROM products where id = $1";
+    const sql = "DELETE FROM products where id = $1 RETURNING*";
     const values = [d.id];
     db.query(sql, values, (err, result) => {
       if (err) return reject(err);

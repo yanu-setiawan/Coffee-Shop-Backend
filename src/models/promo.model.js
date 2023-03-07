@@ -44,7 +44,7 @@ const getPromoDetail = (p) => {
 const insertPromo = (data) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "insert into promo (product_id,coupon, discount) values  ($1, $2, $3) RETURNING *";
+      "insert into promo (product_id,coupon, discount) values  ($1, $2, $3) RETURNING*";
     // parameterized query
     const values = [data.product_id, data.coupon, data.discount];
     db.query(sql, values, (err, result) => {
@@ -57,7 +57,7 @@ const insertPromo = (data) => {
 const updatePromo = (params, body) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "UPDATE promo SET product_id = $1, coupon = $2, discount = $3 WHERE id = $4";
+      "UPDATE promo SET product_id = $1, coupon = $2, discount = $3 WHERE id = $4 RETURNING*";
     // parameterized query
     const values = [body.product_id, body.coupon, body.discount, params.id];
     db.query(sql, values, (err, result) => {
@@ -69,7 +69,7 @@ const updatePromo = (params, body) => {
 
 const deletePromo = (d) => {
   return new Promise((resolve, reject) => {
-    const sql = "DELETE FROM promo where id = $1";
+    const sql = "DELETE FROM promo where id = $1 RETURNING*";
     const values = [d.id];
     db.query(sql, values, (err, result) => {
       if (err) return reject(err);

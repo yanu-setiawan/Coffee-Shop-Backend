@@ -85,7 +85,6 @@ const deletePromo = async (req, res) => {
         data: result.rows,
         msg: "Promo not found",
       });
-      return;
     }
     res.status(200).json({
       msg: "Promo Deleted",

@@ -51,7 +51,7 @@ const insertUsers = (data) => {
 const updateUser = (params, body) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "UPDATE users SET email = $1, password = $2, phone_number = $3 WHERE id = $4";
+      "UPDATE users SET email = $1, password = $2, phone_number = $3 WHERE id = $4 RETURNING*";
     // parameterized query
     const values = [body.email, body.password, body.phone_number, params.id];
     db.query(sql, values, (err, result) => {
@@ -63,7 +63,7 @@ const updateUser = (params, body) => {
 
 const deleteUser = (u) => {
   return new Promise((resolve, reject) => {
-    const sql = "DELETE FROM users where id = $1";
+    const sql = "DELETE FROM users where id = $1 RETURNING*";
     const values = [u.id];
     db.query(sql, values, (err, result) => {
       if (err) return reject(err);
