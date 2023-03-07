@@ -3,7 +3,8 @@ const db = require("../configs/postgre");
 const getPromo = (q) => {
   return new Promise((resolve, reject) => {
     const values = ["%" + (q.searchByName || "") + "%" || "%"];
-    let sql = `select promo.id ,promo.coupon ,promo.discount  ,products.name_product  from promo join products on promo.product_id = products.id WHERE name_product ILIKE $1 ORDER BY  `;
+    let sql =
+      "select promo.id ,promo.coupon ,promo.discount  ,products.name_product  from promo join products on promo.product_id = products.id WHERE name_product ILIKE $1 ORDER BY  ";
     let order = "id ASC";
     if (q.order === "biggest") {
       order = "discount DESC";

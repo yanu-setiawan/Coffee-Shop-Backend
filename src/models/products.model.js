@@ -3,7 +3,8 @@ const db = require("../configs/postgre");
 const getProducts = (q) => {
   return new Promise((resolve, reject) => {
     const values = ["%" + (q.searchByName || "") + "%" || "%"];
-    let sql = `select p.id ,p.name_product ,p.price, c."name" from  products p join categories c on p.category_id = c.id WHERE name_product ILIKE $1 ORDER BY  `;
+    let sql =
+      "select p.id ,p.name_product ,p.price, c.name from  products p join categories c on p.category_id = c.id WHERE name_product ILIKE $1 ORDER BY  ";
     let order = "id ASC";
     if (q.order === "cheapest") {
       order = "price ASC";

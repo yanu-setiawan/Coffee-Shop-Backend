@@ -19,8 +19,8 @@ const db = require("../configs/postgre");
 const getHistory = (q) => {
   return new Promise((resolve, reject) => {
     const values = ["%" + (q.searchByName || "") + "%" || "%"];
-    let sql = `select history.id ,users.email ,products.name_product,product_sizes.size,products.price ,deliveries.delivery_type  ,date_transaction  from history
-    join users on history.id_user = users.id join products on history.id_product =products.id  join deliveries on history.status  = deliveries.id join product_sizes on history.size_id  =product_sizes.id WHERE name_product ILIKE $1 ORDER BY  `;
+    let sql =
+      "select history.id ,users.email ,products.name_product,product_sizes.size,products.price ,deliveries.delivery_type  ,date_transaction  from history join users on history.id_user = users.id join products on history.id_product =products.id  join deliveries on history.status  = deliveries.id join product_sizes on history.size_id  =product_sizes.id WHERE name_product ILIKE $1 ORDER BY  ";
     let order = "id ASC";
     if (q.order === "cheapest") {
       order = "price ASC";
