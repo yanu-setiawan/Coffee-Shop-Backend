@@ -7,7 +7,6 @@ const promoRouter = Router();
 promoRouter.get("/", promoController.getPromo);
 promoRouter.get("/:id", promoController.getPromoDetail);
 promoRouter.post("/", promoController.insertPromo);
-promoRouter.patch("/", promoController.updatePromo);
 promoRouter.patch("/:id", promoController.updatePromo);
 promoRouter.delete("/:id", promoController.deletePromo);
 

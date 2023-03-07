@@ -54,6 +54,9 @@ const insertUsers = async (req, res) => {
     });
   } catch (err) {
     console.log(err.message);
+    if (err) {
+      return res.status(400).json({ msg: "Data already exists" });
+    }
     res.status(500).json({
       msg: "Internal Server Error cuy",
     });
@@ -81,6 +84,7 @@ const deleteUser = async (req, res) => {
     const { params } = req;
     const result = await usersModel.deleteUser(params);
     res.status(200).json({
+      data: result.rows,
       msg: "user Deleted",
     });
   } catch (err) {

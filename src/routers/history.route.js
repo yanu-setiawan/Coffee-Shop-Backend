@@ -8,7 +8,6 @@ historyRouter.get("/", historyController.getHistory);
 historyRouter.get("/:id", historyController.getHistoryDetail);
 historyRouter.post("/", historyController.insertHistory);
 historyRouter.patch("/:id", historyController.updateHistory);
-historyRouter.patch("/", historyController.updateHistory);
 historyRouter.delete("/:id", historyController.deleteHistory);
 
 module.exports = historyRouter;

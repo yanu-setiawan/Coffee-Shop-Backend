@@ -80,15 +80,10 @@ const updateProducts = async (req, res) => {
 const deleteProducts = async (req, res) => {
   try {
     const { params } = req;
+    // eslint-disable-next-line no-unused-vars
     const result = await productsModel.deleteProducts(params);
-    if (result.rows.length === 0) {
-      res.status(404).json({
-        data: result.rows,
-        msg: "Product not found",
-      });
-      return;
-    }
     res.status(200).json({
+      data: result.rows,
       msg: "Product Deleted",
     });
   } catch (err) {
