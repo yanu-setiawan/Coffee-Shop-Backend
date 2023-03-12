@@ -2,7 +2,8 @@ const db = require("../configs/postgre");
 
 const getProducts = (q) => {
   return new Promise((resolve, reject) => {
-    const values = ["%" + (q.searchByName || "") + "%" || "%"];
+    const search =
+      q.searchByName != undefined ? "%" + q.searchByName + "%" : "%";
     let sql =
       "select p.id ,p.name_product ,p.price, c.name from  products p join categories c on p.category_id = c.id WHERE name_product ILIKE $1 ORDER BY  ";
     let order = "id ASC";
@@ -12,17 +13,51 @@ const getProducts = (q) => {
     if (q.order === "priciest") {
       order = "price DESC";
     }
-    if (!isNaN(q.limit)) {
-      order += ` limit ${q.limit || 10}`;
-    }
     sql += order;
 
+    const limit = parseInt(q.limit) || 5;
+    const page = parseInt(q.page) || 1;
+    const offset = (page - 1) * limit;
+    const values = [search, limit, offset];
+    console.log(search);
+
+    sql += " LIMIT $2 OFFSET $3";
+    console.log(sql);
+    console.log(offset);
     db.query(sql, values, (error, result) => {
       if (error) {
         reject(error);
         return;
       }
       resolve(result);
+    });
+  });
+};
+
+const getMetaProducts = (q) => {
+  return new Promise((resolve, reject) => {
+    let sql = `select count(*) as total_data from products p`;
+    db.query(sql, (error, result) => {
+      if (error) {
+        reject(error);
+        return;
+      }
+      const totalData = parseInt(result.rows[0].total_data);
+      const page = parseInt(q.page) || 1;
+      const limit = parseInt(q.limit) || 5;
+      const totalPage = Math.ceil(totalData / limit);
+      let next = ""; // coba dicari
+      let prev = ""; // coba dicari
+      if (page === 1) prev = null;
+      if (page === totalPage) next = null;
+
+      const meta = {
+        totalData,
+        next,
+        prev,
+        totalPage,
+      };
+      resolve(meta);
     });
   });
 };
@@ -82,4 +117,5 @@ module.exports = {
   getProductDetail,
   updateProducts,
   deleteProducts,
+  getMetaProducts,
 };

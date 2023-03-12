@@ -1,4 +1,5 @@
 const usersModel = require("../models/users.model");
+const bcrypt = require("bcrypt");
 
 const getUsers = async (req, res) => {
   try {
@@ -46,17 +47,17 @@ const getUserDetail = async (req, res) => {
 
 const insertUsers = async (req, res) => {
   try {
-    const { body } = req;
-    const result = await usersModel.insertUsers(body);
-    res.status(202).json({
+    const result = await usersModel.insertUsers({
+      email: req.body.email,
+      password: bcrypt.hashSync(req.body.password, 10),
+      phone_number: req.body.phone_number,
+    });
+    res.status(201).json({
       data: result.rows,
-      msg: "Create User Success",
+      msg: "User registered successfully!",
     });
   } catch (err) {
     console.log(err.message);
-    if (err) {
-      return res.status(400).json({ msg: "Data already exists" });
-    }
     res.status(500).json({
       msg: "Internal Server Error cuy",
     });

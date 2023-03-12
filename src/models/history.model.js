@@ -1,21 +1,5 @@
 const db = require("../configs/postgre");
 
-// const getHistory = () => {
-//   return new Promise((resolve, reject) => {
-//     db.query(
-//       `select history.id ,users.email ,products.name_product,product_sizes.size,products.price ,deliveries.delivery_type  ,date_transaction  from history
-//       join users on history.id_user = users.id join products on history.id_product =products.id  join deliveries on history.status  = deliveries.id join product_sizes on history.size_id  =product_sizes.id `,
-//       (err, result) => {
-//         if (err) {
-//           reject(err);
-//           return;
-//         }
-//         resolve(result);
-//       }
-//     );
-//   });
-// };
-
 const getHistory = (q) => {
   return new Promise((resolve, reject) => {
     const values = ["%" + (q.searchByName || "") + "%" || "%"];
