@@ -48,33 +48,59 @@ const getProductDetail = async (req, res) => {
 };
 
 const insertProducts = async (req, res) => {
+  const fileLink = `/images/${req.file.filename}`;
   try {
     const { body } = req;
-    const result = await productsModel.insertProducts(body);
+    const result = await productsModel.insertProducts(body, fileLink);
     res.status(201).json({
-      data: result.rows,
-      msg: "Create Product Success",
+      data: result.rows[0],
+      msg: "Insert Success",
     });
   } catch (err) {
     console.log(err.message);
     res.status(500).json({
-      msg: "Internal Server Error cuy",
+      msg: "Internal server error",
     });
   }
 };
 
+// const updateProducts = async (req, res) => {
+//   if (req.file === undefined) {
+//     fileLink = req.body.image;
+//   } else {
+//     fileLink = `/images/${req.file.filename}`;
+//   }
+//   const fileLink = `/images/${req.file.filename}`;
+//   try {
+//     const { params, body } = req;
+//     const result = await productsModel.updateProducts(params, body, fileLink);
+//     res.status(201).json({
+//       data: result.rows,
+//       msg: "Update Product Success",
+//     });
+//   } catch (err) {
+//     console.log(err.message);
+//     res.status(500).json({
+//       msg: "Internal Server Error cuy",
+//     });
+//   }
+// };
 const updateProducts = async (req, res) => {
   try {
+    let fileLink = req.body.image;
+    if (req.file !== undefined) {
+      fileLink = `/images/${req.file.filename}`;
+    }
     const { params, body } = req;
-    const result = await productsModel.updateProducts(params, body);
-    res.status(201).json({
+    const result = await productsModel.updateProducts(params, body, fileLink);
+    res.status(200).json({
       data: result.rows,
-      msg: "Update Product Success",
+      msg: "Product updated successfully",
     });
-  } catch (err) {
-    console.log(err.message);
+  } catch (error) {
+    console.log(error.message);
     res.status(500).json({
-      msg: "Internal Server Error cuy",
+      msg: "Internal Server Error",
     });
   }
 };
@@ -96,10 +122,31 @@ const deleteProducts = async (req, res) => {
   }
 };
 
+const patchImageProducts = async (req, res) => {
+  const fileLink = `/images/${req.file.filename}`;
+  console.log(fileLink);
+  try {
+    const result = await productsModel.updateImageProducts(
+      fileLink,
+      req.params.id
+    );
+    res.status(200).json({
+      data: result.rows,
+      msg: "Success Updating Image",
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      msg: "Internal Server Error",
+    });
+  }
+};
+
 module.exports = {
   getProducts,
   insertProducts,
   getProductDetail,
   updateProducts,
   deleteProducts,
+  patchImageProducts,
 };

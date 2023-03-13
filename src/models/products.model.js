@@ -81,11 +81,11 @@ const getProductDetail = (p) => {
   });
 };
 
-const insertProducts = (data) => {
+const insertProducts = (body, fileLink) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "insert into products (name_product, price,category_id) values ($1, $2, $3) RETURNING *";
-    const values = [data.name_product, data.price, data.category_id];
+      "insert into products (name_product, price,category_id,image) values ($1, $2, $3,$4) RETURNING *";
+    const values = [body.name_product, body.price, body.category_id, fileLink];
     db.query(sql, values, (err, result) => {
       if (err) return reject(err);
       resolve(result);
@@ -93,13 +93,82 @@ const insertProducts = (data) => {
   });
 };
 
-const updateProducts = (params, body) => {
+// const updateProducts = (params, body,fileLink) => {
+//   return new Promise((resolve, reject) => {
+//     const sql =
+//       "UPDATE products SET name_product = $1, price = $2, category_id= $3 ,image = $4 WHERE id = $5 RETURNING*";
+//     const values = [body.name_product, body.price, body.category_id,fileLink, params.id];
+//     db.query(sql, values, (err, result) => {
+//       if (err) return reject(err);
+//       resolve(result);
+//     });
+//   });
+// };
+
+const updateProducts = (params, body, fileLink) => {
   return new Promise((resolve, reject) => {
+    const updateEntries = {};
+    const values = [];
+    let setClause = "";
+
+    // Cek apakah field name_product ada pada body
+    if (body.name_product) {
+      // Jika ada, tambahkan field name_product dan value-nya ke objek updateEntries
+      updateEntries.name_product = body.name_product;
+      // Push value name_product ke dalam array values
+      values.push(body.name_product);
+      // Tambahkan 'name_product = $x, ' pada setClause, dimana x adalah index values dari name_product
+      setClause += "name_product = $" + values.length + ", ";
+    }
+
+    // Cek apakah field price ada pada body
+    if (body.price) {
+      // Jika ada, tambahkan field price dan value-nya ke objek updateEntries
+      updateEntries.price = body.price;
+      // Push value price ke dalam array values
+      values.push(body.price);
+      // Tambahkan 'price = $x, ' pada setClause, dimana x adalah index values dari price
+      setClause += "price = $" + values.length + ", ";
+    }
+
+    // Cek apakah field category_id ada pada body
+    if (body.category_id) {
+      // Jika ada, tambahkan field category_id dan value-nya ke objek updateEntries
+      updateEntries.category_id = body.category_id;
+      // Push value category_id ke dalam array values
+      values.push(body.category_id);
+      // Tambahkan 'category_id = $x, ' pada setClause, dimana x adalah index values dari category_id
+      setClause += "category_id = $" + values.length + ", ";
+    }
+
+    // Cek apakah fileLink (path ke file gambar) ada
+    if (fileLink) {
+      // Jika ada, tambahkan field image dan value-nya ke objek updateEntries
+      updateEntries.image = fileLink;
+      // Push value fileLink ke dalam array values
+      values.push(fileLink);
+      // Tambahkan 'image = $x, ' pada setClause, dimana x adalah index values dari fileLink
+      setClause += "image = $" + values.length + ", ";
+    }
+
+    // Hilangkan trailing comma dan space pada setClause
+    setClause = setClause.slice(0, -2);
+
+    // Push value params.id (id produk yang akan diupdate) ke dalam array values
+    values.push(params.id);
+
+    // Bangun string SQL dengan menggunakan setClause dan parameter values
     const sql =
-      "UPDATE products SET name_product = $1, price = $2, category_id= $3 WHERE id = $4 RETURNING*";
-    const values = [body.name_product, body.price, body.category_id, params.id];
+      "UPDATE products SET " +
+      setClause +
+      " WHERE id = $" +
+      values.length +
+      " RETURNING *";
+
+    // Eksekusi query ke database dengan menggunakan string SQL dan parameter values
     db.query(sql, values, (err, result) => {
       if (err) return reject(err);
+      // Resolve dengan hasil query (updated product)
       resolve(result);
     });
   });
@@ -116,6 +185,16 @@ const deleteProducts = (d) => {
   });
 };
 
+const updateImageProducts = (fileLink, id) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE products SET image = $1 WHERE id = $2 RETURNING *";
+    db.query(sql, [fileLink, id], (err, result) => {
+      if (err) return reject(err);
+      resolve(result);
+    });
+  });
+};
+
 module.exports = {
   getProducts,
   insertProducts,
@@ -123,4 +202,5 @@ module.exports = {
   updateProducts,
   deleteProducts,
   getMetaProducts,
+  updateImageProducts,
 };

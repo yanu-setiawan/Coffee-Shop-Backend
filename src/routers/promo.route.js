@@ -2,7 +2,7 @@ const { Router } = require("express");
 
 const promoController = require("../controllers/promo.controller");
 const { checkToken } = require("../middlewares/auth");
-const { checkRole } = require("../controllers/auth.controller");
+const { checkRole } = require("../middlewares/auth");
 
 const promoRouter = Router();
 

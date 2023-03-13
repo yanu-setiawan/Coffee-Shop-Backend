@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: false })); // form-urlencoded
 app.use(express.json()); // raw json
 // body akan dimasukkan ke req.body
 
-// app.use("/images", express.static("images"));
+app.use("/images", express.static("images"));
 
 const morgan = require("morgan");
 app.use(
