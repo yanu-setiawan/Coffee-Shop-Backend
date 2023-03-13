@@ -39,7 +39,6 @@ const insertUsers = (data) => {
   return new Promise((resolve, reject) => {
     const sql =
       "insert into users (email, password, phone_number,role_id ) values ($1, $2, $3,2) RETURNING *";
-    // parameterized query
     const values = [data.email, data.password, data.phone_number];
     db.query(sql, values, (err, result) => {
       if (err) return reject(err);

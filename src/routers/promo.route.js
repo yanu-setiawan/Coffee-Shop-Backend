@@ -1,13 +1,15 @@
 const { Router } = require("express");
 
 const promoController = require("../controllers/promo.controller");
+const { checkToken } = require("../middlewares/auth");
+const { checkRole } = require("../controllers/auth.controller");
 
 const promoRouter = Router();
 
 promoRouter.get("/", promoController.getPromo);
 promoRouter.get("/:id", promoController.getPromoDetail);
-promoRouter.post("/", promoController.insertPromo);
-promoRouter.patch("/:id", promoController.updatePromo);
-promoRouter.delete("/:id", promoController.deletePromo);
+promoRouter.post("/", checkToken, checkRole, promoController.insertPromo);
+promoRouter.patch("/:id", checkToken, checkRole, promoController.updatePromo);
+promoRouter.delete("/:id", checkToken, checkRole, promoController.deletePromo);
 
 module.exports = promoRouter;

@@ -20,6 +20,7 @@ const getProducts = (q) => {
     const offset = (page - 1) * limit;
     const values = [search, limit, offset];
     console.log(search);
+    console.log(limit);
 
     sql += " LIMIT $2 OFFSET $3";
     console.log(sql);
@@ -36,7 +37,7 @@ const getProducts = (q) => {
 
 const getMetaProducts = (q) => {
   return new Promise((resolve, reject) => {
-    let sql = `select count(*) as total_data from products p`;
+    let sql = "select count(*) as total_data from products p";
     db.query(sql, (error, result) => {
       if (error) {
         reject(error);
@@ -46,10 +47,25 @@ const getMetaProducts = (q) => {
       const page = parseInt(q.page) || 1;
       const limit = parseInt(q.limit) || 5;
       const totalPage = Math.ceil(totalData / limit);
-      let next = ""; // coba dicari
-      let prev = ""; // coba dicari
-      if (page === 1) prev = null;
-      if (page === totalPage) next = null;
+      const nextPage = `/products?page=${
+        page + 1 <= totalPage ? page + 1 : null
+      }&limit=${limit} `;
+      const prevPage = `/products?page=${
+        page - 1 > 0 ? page - 1 : null
+      }&limit=${limit}`;
+
+      let next = nextPage;
+      let prev = prevPage;
+      // // Jika halaman saat ini lebih besar dari 1, maka halaman sebelumnya tersedia
+      // if (page > 1) {
+      //   // Membuat URL yang mengarah ke halaman sebelumnya
+      //   prev = `?page=${page - 1}&limit=${limit}`;
+      // }
+      // // Jika halaman saat ini kurang dari total halaman yang tersedia, maka halaman selanjutnya tersedia
+      // if (page < totalPage) {
+      //   // Membuat URL yang mengarah ke halaman selanjutnya
+      //   next = `?page=${page + 1}&limit=${limit}`;
+      // }
 
       const meta = {
         totalData,

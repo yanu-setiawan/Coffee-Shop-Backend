@@ -12,7 +12,6 @@ const getProducts = async (req, res) => {
       return;
     }
     const meta = await productsModel.getMetaProducts(query);
-    console.log(query);
     res.status(200).json({
       data: result.rows,
       meta,

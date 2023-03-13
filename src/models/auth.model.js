@@ -30,8 +30,19 @@ const editPassword = (newPassword, userId) => {
   });
 };
 
+const getRole = (userId) => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT u.id,u.role_id FROM users u WHERE id = $1";
+    db.query(sql, [userId], (err, result) => {
+      if (err) return reject(err);
+      resolve(result);
+    });
+  });
+};
+
 module.exports = {
   userVerification,
   getPassword,
   editPassword,
+  getRole,
 };
