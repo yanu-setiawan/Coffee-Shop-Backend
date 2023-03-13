@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { sendToMail } = require("../helpers/sendMailer");
+// const { sendToMail } = require("../helpers/sendMailer");
 const authModel = require("../models/auth.model");
 // eslint-disable-next-line no-unused-vars
 const { jwtSecret, user } = require("../configs/environment");
@@ -76,32 +76,66 @@ const editPassword = async (req, res) => {
   }
 };
 
-const forgotPassword = async (req, res) => {
+const createOTP = async (req, res) => {
+  const { email } = req.body;
   try {
-    const { email } = req.body;
-    const checkEmail = await authModel.userVerification(email);
-    console.log(checkEmail);
-    // console.log(checkEmail.email);
-    if (!checkEmail) {
-      return res.status(404).json({ msg: "Email not found" });
+    const generateOTP = () => {
+      const OTP_LENGTH = 4;
+      // Define all possible characters
+      const chars =
+        "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+      let otp = "";
+      for (let i = 0; i < OTP_LENGTH; i++) {
+        // Pick a random character from the `chars` string
+        const randomIndex = Math.floor(Math.random() * chars.length);
+        otp += chars[randomIndex];
+      }
+
+      return otp;
+    };
+    const otp = generateOTP().toString();
+    const result = await authModel.createOtp(email, otp);
+    if (result.rows < 1) {
+      res.status(404).json({
+        msg: "Email not found!",
+      });
     }
 
-    const data = {
-      name: "Pelanggan Setia Coffee Shop",
-      to: "mckenzi570@gmail.com", //checkEmail.rows[0].email//
-      subject: "Reset Password",
-      template: "template.html",
-    };
-    console.log(data.to);
-    const result = await sendToMail(data);
-    return res.status(200).json({
-      status: 200,
-      msg: "Sent!, Please check your email account",
-      receiver: result.envelope.to,
+    res.status(200).json({
+      otp: result.rows[0].otp,
+      msg: "Create Otp",
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ status: 500, msg: "Internal server error" });
+    res.status(500).json({
+      msg: "Internal Server Error",
+    });
+  }
+};
+
+const forgotPassword = async (req, res) => {
+  try {
+    const { email, otp, password } = req.body;
+    const otpFromDb = await authModel.getOtp(email);
+    console.log(otpFromDb);
+    console.log(otp);
+    if (otpFromDb.rows[0].otp !== otp) {
+      res.status(404).json({
+        msg: "OTP not valid!",
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await authModel.forgotPassword(email, hashedPassword);
+    res.status(200).json({
+      msg: "Change Password Success :)",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      msg: "Internal Server Error",
+    });
   }
 };
 
@@ -127,6 +161,7 @@ module.exports = {
   login,
   privateAccess,
   editPassword,
-  forgotPassword,
   checkRole,
+  createOTP,
+  forgotPassword,
 };

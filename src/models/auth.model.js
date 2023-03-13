@@ -40,9 +40,43 @@ const getRole = (userId) => {
   });
 };
 
+const createOtp = (email, otp) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE users set otp = $1 WHERE email =$2 RETURNING otp";
+    const values = [otp, email];
+    db.query(sql, values, (err, result) => {
+      if (err) return reject(err);
+      resolve(result);
+    });
+  });
+};
+
+const getOtp = (email) => {
+  return new Promise((resolve, reject) => {
+    const sql = " SELECT otp FROM users WHERE email = $1";
+    db.query(sql, [email], (err, result) => {
+      if (err) reject(err);
+      resolve(result);
+    });
+  });
+};
+
+const forgotPassword = (email, password) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE users set password =$1 where email= $2";
+    db.query(sql, [password, email], (err, result) => {
+      if (err) reject(err);
+      resolve(result);
+    });
+  });
+};
+
 module.exports = {
   userVerification,
   getPassword,
   editPassword,
   getRole,
+  createOtp,
+  getOtp,
+  forgotPassword,
 };

@@ -56,17 +56,6 @@ const getMetaProducts = (q) => {
 
       let next = nextPage;
       let prev = prevPage;
-      // // Jika halaman saat ini lebih besar dari 1, maka halaman sebelumnya tersedia
-      // if (page > 1) {
-      //   // Membuat URL yang mengarah ke halaman sebelumnya
-      //   prev = `?page=${page - 1}&limit=${limit}`;
-      // }
-      // // Jika halaman saat ini kurang dari total halaman yang tersedia, maka halaman selanjutnya tersedia
-      // if (page < totalPage) {
-      //   // Membuat URL yang mengarah ke halaman selanjutnya
-      //   next = `?page=${page + 1}&limit=${limit}`;
-      // }
-
       const meta = {
         totalData,
         next,

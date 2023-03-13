@@ -1,7 +1,4 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a name="readme-top"></a>
-
-
 
 
 <!-- PROJECT LOGO -->
@@ -85,7 +82,7 @@ $ express /tmp/foo && cd /tmp/foo
   Install dependencies:
 
 ```console
-$ npm install
+$ npm install express
 ```
 
   Start the server:
@@ -113,7 +110,7 @@ $ npm start
 ```console
 $ git clone https://github.com/expressjs/express.git --depth 1
 $ cd express
-$ npm install
+$ npm install --save express-dependencies
 ```
 
   Then run whichever example you want:
@@ -143,7 +140,7 @@ If you discover a security vulnerability in Express, please see [Security Polici
 To run the test suite, first install the dependencies, then run `npm test`:
 
 ```console
-$ npm install
+$ npm install 
 $ npm test
 ```
 

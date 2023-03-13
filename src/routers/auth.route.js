@@ -17,5 +17,7 @@ authRouter.get(
 //edit password / update req
 authRouter.patch("/", authMiddleware.checkToken, authController.editPassword);
 authRouter.patch("/forgot", authController.forgotPassword);
+authRouter.patch("/otp", authController.createOTP);
+authRouter.patch("/forgot", authController.forgotPassword);
 
 module.exports = authRouter;
