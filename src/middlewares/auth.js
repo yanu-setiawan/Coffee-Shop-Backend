@@ -41,6 +41,26 @@ const checkRole = async (req, res, next) => {
   }
 };
 
+// const verifyToken =async (req, res, next) => {
+//   const tokens = req.header("Authorization");
+//   try {
+//   if (!tokens)
+//     return res.status(403).json({
+//       msg: "Silahkan Login Terlebih Dahulu",
+//     });
+//   const token = bearerToken.split(" ")[1];
+//     if (getRoleDb === 1) {
+//       next();
+//     } else {
+//       return res.status(403).json({
+//         msg: "Hanya Bisa Diakses Oleh Admin",
+//       });
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).json({ status: 500, msg: "Internal server error" });
+//   }
+
 module.exports = {
   checkToken,
   checkRole,

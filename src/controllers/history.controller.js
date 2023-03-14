@@ -1,21 +1,5 @@
 const historyModel = require("../models/history.model");
 
-// const getHistory = (req, res) => {
-//   historyModel
-//     .getHistory()
-//     .then((result) => {
-//       res.status(200).json({
-//         data: result.rows,
-//       });
-//     })
-//     .catch((err) => {
-//       console.log(err.message);
-//       res.status(500).json({
-//         msg: "Internal Server Error",
-//       });
-//     });
-// };
-
 const getHistory = async (req, res) => {
   try {
     const { query } = req;

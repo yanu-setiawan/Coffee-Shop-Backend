@@ -1,3 +1,4 @@
+// const { token } = require("morgan");
 const db = require("../configs/postgre");
 
 const userVerification = (email) => {
@@ -71,6 +72,17 @@ const forgotPassword = (email, password) => {
   });
 };
 
+const getToken = (userId, token) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE users SET token=$1 WHERE id=$2";
+    const values = [token, userId];
+    db.query(sql, values, (err, result) => {
+      if (err) return reject(err);
+      resolve(result);
+    });
+  });
+};
+
 module.exports = {
   userVerification,
   getPassword,
@@ -79,4 +91,5 @@ module.exports = {
   createOtp,
   getOtp,
   forgotPassword,
+  getToken,
 };
