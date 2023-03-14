@@ -101,9 +101,8 @@ const createOTP = async (req, res) => {
         msg: "Email not found!",
       });
     }
-
+    console.log(result.rows[0].otp);
     res.status(200).json({
-      otp: result.rows[0].otp,
       msg: "Create Otp",
     });
   } catch (error) {

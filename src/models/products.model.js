@@ -56,6 +56,9 @@ const getMetaProducts = (q) => {
 
       let next = nextPage;
       let prev = prevPage;
+
+      if (page === 1) prev = null;
+      if (page === totalPage) next = null;
       const meta = {
         totalData,
         next,
@@ -125,29 +128,21 @@ const updateProducts = (params, body, fileLink) => {
     if (body.price) {
       // Jika ada, tambahkan field price dan value-nya ke objek updateEntries
       updateEntries.price = body.price;
-      // Push value price ke dalam array values
       values.push(body.price);
-      // Tambahkan 'price = $x, ' pada setClause, dimana x adalah index values dari price
       setClause += "price = $" + values.length + ", ";
     }
 
     // Cek apakah field category_id ada pada body
     if (body.category_id) {
-      // Jika ada, tambahkan field category_id dan value-nya ke objek updateEntries
       updateEntries.category_id = body.category_id;
-      // Push value category_id ke dalam array values
       values.push(body.category_id);
-      // Tambahkan 'category_id = $x, ' pada setClause, dimana x adalah index values dari category_id
       setClause += "category_id = $" + values.length + ", ";
     }
 
     // Cek apakah fileLink (path ke file gambar) ada
     if (fileLink) {
-      // Jika ada, tambahkan field image dan value-nya ke objek updateEntries
       updateEntries.image = fileLink;
-      // Push value fileLink ke dalam array values
       values.push(fileLink);
-      // Tambahkan 'image = $x, ' pada setClause, dimana x adalah index values dari fileLink
       setClause += "image = $" + values.length + ", ";
     }
 

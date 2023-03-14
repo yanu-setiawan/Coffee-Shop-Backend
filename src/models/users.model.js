@@ -35,6 +35,16 @@ const getUserDetail = (u) => {
   });
 };
 
+// const getEmail = (body) => {
+//   return new Promise((resolve, reject) => {
+//     const sql = "SELECT u.id,u.email FROM users u WHERE id = $1";
+//     db.query(sql, [body.email], (err, result) => {
+//       if (err) return reject(err);
+//       resolve(result);
+//     });
+//   });
+// };
+
 const insertUsers = (data) => {
   return new Promise((resolve, reject) => {
     const sql =
@@ -70,6 +80,16 @@ const deleteUser = (u) => {
     });
   });
 };
+const getEmail = (email) => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * FROM users WHERE email = $1";
+    const values = [email];
+    db.query(sql, values, (err, result) => {
+      if (err) return reject(err);
+      resolve(result);
+    });
+  });
+};
 
 module.exports = {
   getUsers,
@@ -77,4 +97,5 @@ module.exports = {
   insertUsers,
   updateUser,
   deleteUser,
+  getEmail,
 };

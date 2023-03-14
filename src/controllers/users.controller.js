@@ -45,8 +45,35 @@ const getUserDetail = async (req, res) => {
   }
 };
 
+// const insertUsers = async (req, res) => {
+//   try {
+//     const result = await usersModel.insertUsers({
+//       email: req.body.email,
+//       password: bcrypt.hashSync(req.body.password, 10),
+//       phone_number: req.body.phone_number,
+//     });
+//     res.status(201).json({
+//       data: result.rows,
+//       msg: "User registered successfully!",
+//     });
+//   } catch (err) {
+//     console.log(err.message);
+//     res.status(500).json({
+//       msg: "Internal Server Error cuy",
+//     });
+//   }
+// };
+
 const insertUsers = async (req, res) => {
   try {
+    // Cek apakah email sudah terdaftar
+    const emailExists = await usersModel.getEmail(req.body.email);
+    if (emailExists.rows.length > 0) {
+      return res.status(400).json({
+        msg: "Email / Phone Number sudah terdaftar",
+      });
+    }
+    // Jika email belum terdaftar, lakukan insert
     const result = await usersModel.insertUsers({
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 10),
