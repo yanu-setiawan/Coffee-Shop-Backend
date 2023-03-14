@@ -5,7 +5,7 @@ const getProducts = (q) => {
     const search =
       q.searchByName != undefined ? "%" + q.searchByName + "%" : "%";
     let sql =
-      "select p.id ,p.name_product ,p.price, c.name,image from  products p join categories c on p.category_id = c.id WHERE name_product ILIKE $1 ORDER BY  ";
+      "select p.id ,p.name_product ,p.price, c.name as category,image from  products p join categories c on p.category_id = c.id WHERE name_product ILIKE $1 ORDER BY  ";
     let order = "id ASC";
     if (q.order === "cheapest") {
       order = "price ASC";
