@@ -113,7 +113,6 @@ const cloudUpload = async (req, res) => {
     const { data, err, msg } = await uploader(req, "product", params.id);
     if (err) throw { msg, err };
     if (!data) return res.status(200).json({ msg: "No File Uploaded" });
-    console.log(data);
     return data;
   } catch (err) {
     console.log(err.message);
