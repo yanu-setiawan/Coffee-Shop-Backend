@@ -15,6 +15,9 @@ const authRouter = require("./auth.route");
 //transactions
 const transactionRouter = require("./transactions.route");
 //
+const commentsRouter = require("./comments.route");
+//
+const errorController = require("../controllers/error.controller");
 
 const masterRouter = Router();
 
@@ -25,5 +28,8 @@ masterRouter.use("/transactions", transactionRouter);
 masterRouter.use("/products", productsRouter);
 masterRouter.use("/promo", promoRouter);
 masterRouter.use("/history", historyRouter);
+masterRouter.use("/comments", commentsRouter);
+masterRouter.get("/error", errorController.getError);
+masterRouter.post("/error", errorController.createError);
 
 module.exports = masterRouter;

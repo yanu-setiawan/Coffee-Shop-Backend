@@ -3,7 +3,8 @@ const { Router } = require("express");
 const productsController = require("../controllers/products.controller");
 const { checkToken } = require("../middlewares/auth");
 const { checkRole } = require("../middlewares/auth");
-const { singleUpload } = require("../middlewares/diskUpload");
+// const { singleUpload } = require("../middlewares/diskUpload");
+const memoryUpload = require("../middlewares/memoryUpload");
 
 const productsRouter = Router();
 
@@ -13,14 +14,14 @@ productsRouter.post(
   "/",
   checkToken,
   checkRole,
-  singleUpload("image"),
+  memoryUpload.single("image"),
   productsController.insertProducts
 );
 productsRouter.patch(
   "/:id",
   checkToken,
   checkRole,
-  singleUpload("image"),
+  memoryUpload.single("image"),
   productsController.updateProducts
   //   productsController.patchImageProducts
 );

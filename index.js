@@ -4,7 +4,7 @@ const express = require("express");
 
 // create express application
 const app = express();
-app.use(cors());
+app.use(cors({ origin: "*" }));
 
 const { serverPort } = require("./src/configs/environment");
 const PORT = serverPort || 8080;
@@ -24,6 +24,31 @@ app.use(
 const masterRouter = require("./src/routers");
 app.use(masterRouter);
 
-app.listen(PORT, () => {
-  console.log(`Server is running at port ${PORT}`);
-});
+// const { client } = require("./src/configs/mongodb");
+// client
+//   .connect()
+//   .then(() => {
+//     console.log("MongoDB Connected");
+//     app.listen(PORT, () => {
+//       console.log(`Server is running at port ${PORT}`);
+//     });
+//   })
+//   .catch((err) => console.log(err));
+const {
+  mongoPass,
+  mongoDbName,
+  mongoDbHost,
+  mongoDbUser,
+} = require("./src/configs/environment");
+const mongoose = require("mongoose");
+mongoose
+  .connect(
+    `mongodb+srv://${mongoDbUser}:${mongoPass}@${mongoDbHost}/${mongoDbName}?retryWrites=true&w=majority`
+  )
+  .then(() => {
+    console.log("Mongo DB Connected");
+    app.listen(PORT, () => {
+      console.log(`Server us running at port ${PORT}`);
+    });
+  })
+  .catch((err) => console.log(err));

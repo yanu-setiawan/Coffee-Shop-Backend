@@ -15,7 +15,7 @@ const getProducts = (q) => {
     }
     sql += order;
 
-    const limit = parseInt(q.limit) || 5;
+    const limit = parseInt(q.limit) || 12;
     const page = parseInt(q.page) || 1;
     const offset = (page - 1) * limit;
     const values = [search, limit, offset];
