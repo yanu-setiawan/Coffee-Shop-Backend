@@ -43,7 +43,7 @@ const getProducts = (query) => {
     //   sqlQuery += ` AND lower(p.name_product) LIKE lower('%${query.name}%')`;
     // }
 
-    if (query.categories && !query.favorite) {
+    if (query.categories) {
       sqlQuery += ` AND p.category_id = ${query.categories}`;
     }
 
