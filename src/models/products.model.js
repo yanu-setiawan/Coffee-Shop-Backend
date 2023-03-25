@@ -45,7 +45,7 @@ const getMetaProducts = (q) => {
       }
       const totalData = parseInt(result.rows[0].total_data);
       const page = parseInt(q.page) || 1;
-      const limit = parseInt(q.limit) || 5;
+      const limit = parseInt(q.limit) || 12;
       const totalPage = Math.ceil(totalData / limit);
       const nextPage = `/products?page=${
         page + 1 <= totalPage ? page + 1 : null

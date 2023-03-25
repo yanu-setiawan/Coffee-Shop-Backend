@@ -11,6 +11,18 @@ const userVerification = (email) => {
   });
 };
 
+// const register = (body) => {
+//   return new Promise((resolve, reject) => {
+//     const sql =
+//       "insert into users (email, password, phone_number,role_id ) values ($1, $2, $3,2) RETURNING email,phone_number";
+//     const values = [body.email, body.password, body.phone_number];
+//     db.query(sql, values, (err, result) => {
+//       if (err) return reject(err);
+//       resolve(result);
+//     });
+//   });
+// };
+
 const getPassword = (userId) => {
   return new Promise((resolve, reject) => {
     const sql = "SELECT u.password FROM users u WHERE id = $1";
