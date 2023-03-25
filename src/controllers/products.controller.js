@@ -8,12 +8,14 @@ const randomstring = require("randomstring");
 const getProducts = async (req, res) => {
   try {
     const { query } = req;
-    if (query.hasOwnProperty("favorite") && query.favorite == true) {
-      delete query.categories;
-    }
-    if (query.hasOwnProperty("categories")) {
+
+    if (query.hasOwnProperty("categories") && query.favorite == "false") {
       delete query.favorite;
     }
+    if (query.hasOwnProperty("favorite") && query.favorite == "true") {
+      delete query.categories;
+    }
+
     const result = await productsModel.getProducts({
       ...query,
       name: query.name || "",
@@ -25,6 +27,7 @@ const getProducts = async (req, res) => {
       });
       return;
     }
+
     const meta = await productsModel.getMetaProducts(query);
     res.status(200).json({
       data: result.rows,

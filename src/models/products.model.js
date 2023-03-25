@@ -39,10 +39,6 @@ const getProducts = (query) => {
   return new Promise((resolve, reject) => {
     let sqlQuery = `select p.id ,p.name_product ,p.price, p.favorite, c.name as category,image  from  products p join categories c on p.category_id = c.id WHERE lower(p.name_product) LIKE lower('%${query.name}%')`;
 
-    // if (query.name) {
-    //   sqlQuery += ` AND lower(p.name_product) LIKE lower('%${query.name}%')`;
-    // }
-
     if (query.categories) {
       sqlQuery += ` AND p.category_id = ${query.categories}`;
     }
@@ -50,10 +46,6 @@ const getProducts = (query) => {
     if (query.favorite) {
       sqlQuery += ` AND p.favorite = ${query.favorite}`;
     }
-
-    // if (query.name && query.categories) {
-    //   sqlQuery += ` WHERE lower(p.name_product) LIKE lower('%${query.name}%') AND p.category_id = ${query.categories}`;
-    // }
 
     let order = "p.id ASC";
     if (query.order === "cheapest") order = "p.price ASC";
@@ -66,7 +58,6 @@ const getProducts = (query) => {
       const offset = parseInt(page - 1) * limit;
       sqlQuery += ` LIMIT ${limit} OFFSET ${offset}`;
     }
-    console.log(sqlQuery);
     db.query(sqlQuery, (err, result) => {
       if (err) {
         reject(err);
