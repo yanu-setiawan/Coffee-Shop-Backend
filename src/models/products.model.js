@@ -38,14 +38,18 @@ const db = require("../configs/postgre");
 const getProducts = (query) => {
   return new Promise((resolve, reject) => {
     let sqlQuery =
-      "select p.id ,p.name_product ,p.price, c.name as category,image from  products p join categories c on p.category_id = c.id";
+      "select p.id ,p.name_product ,p.price, p.favorite, c.name as category,image from  products p join categories c on p.category_id = c.id";
 
     if (query.name) {
       sqlQuery += ` WHERE lower(p.name_product) LIKE lower('%${query.name}%')`;
     }
 
-    if (query.categories) {
+    if (query.categories && !query.favorite) {
       sqlQuery += ` WHERE p.category_id = ${query.categories}`;
+    }
+
+    if (query.favorite) {
+      sqlQuery += ` WHERE p.favorite = ${query.favorite}`;
     }
     if (query.name && query.categories) {
       sqlQuery += ` WHERE lower(p.name_product) LIKE lower('%${query.name}%') AND p.category_id = ${query.categories}`;
