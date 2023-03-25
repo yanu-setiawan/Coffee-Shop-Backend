@@ -1,33 +1,71 @@
 const db = require("../configs/postgre");
 
-const getProducts = (q) => {
+// const getProducts = (q) => {
+//   return new Promise((resolve, reject) => {
+//     const search =
+//       q.searchByName != undefined ? "%" + q.searchByName + "%" : "%";
+//     let sql =
+//       "select p.id ,p.name_product ,p.price, c.name as category,image from  products p join categories c on p.category_id = c.id WHERE name_product ILIKE $1 ORDER BY  ";
+//     let order = "id ASC";
+//     if (q.order === "cheapest") {
+//       order = "price ASC";
+//     }
+//     if (q.order === "priciest") {
+//       order = "price DESC";
+//     }
+//     sql += order;
+
+//     const limit = parseInt(q.limit) || 12;
+//     const page = parseInt(q.page) || 1;
+//     const offset = (page - 1) * limit;
+//     const values = [search, limit, offset];
+//     console.log(search);
+//     console.log(limit);
+
+//     sql += " LIMIT $2 OFFSET $3";
+//     console.log(sql);
+//     console.log(offset);
+//     db.query(sql, values, (error, result) => {
+//       if (error) {
+//         reject(error);
+//         return;
+//       }
+//       resolve(result);
+//     });
+//   });
+// };
+
+const getProducts = (query) => {
   return new Promise((resolve, reject) => {
-    const search =
-      q.searchByName != undefined ? "%" + q.searchByName + "%" : "%";
-    let sql =
-      "select p.id ,p.name_product ,p.price, c.name as category,image from  products p join categories c on p.category_id = c.id WHERE name_product ILIKE $1 ORDER BY  ";
-    let order = "id ASC";
-    if (q.order === "cheapest") {
-      order = "price ASC";
-    }
-    if (q.order === "priciest") {
-      order = "price DESC";
-    }
-    sql += order;
+    let sqlQuery =
+      "select p.id ,p.name_product ,p.price, c.name as category,image from  products p join categories c on p.category_id = c.id";
 
-    const limit = parseInt(q.limit) || 12;
-    const page = parseInt(q.page) || 1;
-    const offset = (page - 1) * limit;
-    const values = [search, limit, offset];
-    console.log(search);
-    console.log(limit);
+    if (query.name) {
+      sqlQuery += ` WHERE lower(p.name_product) LIKE lower('%${query.name}%')`;
+    }
 
-    sql += " LIMIT $2 OFFSET $3";
-    console.log(sql);
-    console.log(offset);
-    db.query(sql, values, (error, result) => {
-      if (error) {
-        reject(error);
+    if (query.categories) {
+      sqlQuery += ` WHERE p.category_id = ${query.categories}`;
+    }
+    if (query.name && query.categories) {
+      sqlQuery += ` WHERE lower(p.name_product) LIKE lower('%${query.name}%') AND p.category_id = ${query.categories}`;
+    }
+
+    let order = "p.id ASC";
+    if (query.order === "cheapest") order = "p.price ASC";
+    if (query.order === "priciest") order = "p.price DESC";
+    sqlQuery += ` ORDER BY ${order}`;
+
+    if (query.limit) {
+      const limit = parseInt(query.limit) || 12;
+      const page = parseInt(query.page) || 1;
+      const offset = parseInt(page - 1) * limit;
+      sqlQuery += ` LIMIT ${limit} OFFSET ${offset}`;
+    }
+
+    db.query(sqlQuery, (err, result) => {
+      if (err) {
+        reject(err);
         return;
       }
       resolve(result);
