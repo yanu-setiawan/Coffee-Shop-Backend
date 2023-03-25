@@ -1,3 +1,4 @@
+/* eslint-disable no-prototype-builtins */
 /* eslint-disable no-unreachable */
 /* eslint-disable no-unused-vars */
 const productsModel = require("../models/products.model");
@@ -7,6 +8,12 @@ const randomstring = require("randomstring");
 const getProducts = async (req, res) => {
   try {
     const { query } = req;
+    if (query.hasOwnProperty("categories")) {
+      delete query.favorite;
+    }
+    if (query.hasOwnProperty("favorite")) {
+      delete query.categories;
+    }
     const result = await productsModel.getProducts({
       ...query,
       name: query.name || "",

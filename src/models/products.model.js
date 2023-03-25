@@ -66,7 +66,7 @@ const getProducts = (query) => {
       const offset = parseInt(page - 1) * limit;
       sqlQuery += ` LIMIT ${limit} OFFSET ${offset}`;
     }
-    // console.log(sqlQuery);
+    console.log(sqlQuery);
     db.query(sqlQuery, (err, result) => {
       if (err) {
         reject(err);
@@ -77,30 +77,75 @@ const getProducts = (query) => {
   });
 };
 
+// const getMetaProducts = (q) => {
+//   return new Promise((resolve, reject) => {
+//     let sql = "select count(*) as total_data from products p";
+//     db.query(sql, (error, result) => {
+//       if (error) {
+//         reject(error);
+//         return;
+//       }
+//       const totalData = parseInt(result.rows[0].total_data);
+
+//       const page = parseInt(q.page) || 1;
+//       const limit = parseInt(q.limit) || 12;
+//       const totalPage = Math.ceil(totalData / limit);
+//       const nextPage = `/products?page=${
+//         page + 1 <= totalPage ? page + 1 : null
+//       }&limit=${limit} `;
+
+//       const prevPage = `/products?page=${
+//         page - 1 > 0 ? page - 1 : null
+//       }&limit=${limit}`;
+
+//       let next = nextPage;
+//       let prev = prevPage;
+
+//       if (page === 1) prev = null;
+//       if (page === totalPage) next = null;
+//       const meta = {
+//         totalData,
+//         next,
+//         prev,
+//         totalPage,
+//       };
+//       resolve(meta);
+//     });
+//   });
+// };
+
 const getMetaProducts = (q) => {
   return new Promise((resolve, reject) => {
-    let sql = "select count(*) as total_data from products p";
-    db.query(sql, (error, result) => {
+    console.log(q);
+    let sqlQuery = "SELECT COUNT(*) AS total_data FROM products WHERE id  <> 1";
+    if (q.search) {
+      sqlQuery += ` AND LOWER(name_product) LIKE LOWER('%${q.search}%')`;
+    }
+    if (q.category) {
+      sqlQuery += ` AND category_id = ${q.category}`;
+    }
+    db.query(sqlQuery, (error, result) => {
       if (error) {
         reject(error);
         return;
       }
       const totalData = parseInt(result.rows[0].total_data);
-      const page = parseInt(q.page) || 1;
       const limit = parseInt(q.limit) || 12;
+      const page = parseInt(q.page) || 1;
       const totalPage = Math.ceil(totalData / limit);
-      const nextPage = `/products?page=${
-        page + 1 <= totalPage ? page + 1 : null
-      }&limit=${limit} `;
-      const prevPage = `/products?page=${
-        page - 1 > 0 ? page - 1 : null
-      }&limit=${limit}`;
+      let next = "";
+      let prev = "";
+      if (page < totalPage) {
+        next = `/products?page=${page + 1}&limit=${limit}`;
+      } else {
+        next = null;
+      }
 
-      let next = nextPage;
-      let prev = prevPage;
-
-      if (page === 1) prev = null;
-      if (page === totalPage) next = null;
+      if (page > 1) {
+        prev = `/products?page=${page - 1}&limit=${limit}`;
+      } else {
+        prev = null;
+      }
       const meta = {
         totalData,
         next,
