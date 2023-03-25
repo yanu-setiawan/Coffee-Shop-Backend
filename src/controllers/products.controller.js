@@ -7,7 +7,10 @@ const randomstring = require("randomstring");
 const getProducts = async (req, res) => {
   try {
     const { query } = req;
-    const result = await productsModel.getProducts(query);
+    const result = await productsModel.getProducts({
+      ...query,
+      name: query.name || "",
+    });
     if (result.rows.length === 0) {
       res.status(404).json({
         data: result.rows,
@@ -21,7 +24,7 @@ const getProducts = async (req, res) => {
       meta,
     });
   } catch (err) {
-    console.log(err.message);
+    // console.log(err.message);
     res.status(500).json({
       msg: "Internal Server Error",
     });
