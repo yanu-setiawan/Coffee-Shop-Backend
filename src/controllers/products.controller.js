@@ -8,11 +8,11 @@ const randomstring = require("randomstring");
 const getProducts = async (req, res) => {
   try {
     const { query } = req;
+    if (query.hasOwnProperty("favorite") && query.favorite == true) {
+      delete query.categories;
+    }
     if (query.hasOwnProperty("categories")) {
       delete query.favorite;
-    }
-    if (query.hasOwnProperty("favorite")) {
-      delete query.categories;
     }
     const result = await productsModel.getProducts({
       ...query,
