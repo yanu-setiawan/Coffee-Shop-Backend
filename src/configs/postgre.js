@@ -10,7 +10,6 @@ const postgre = new Pool({
   port: dbPort,
   user,
   password: pwd,
-  //   connectionString: "postgresql://fakhri:fakhri@localhost:5433/kopi_toko",
 });
 
 module.exports = postgre;

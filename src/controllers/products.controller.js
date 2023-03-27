@@ -28,13 +28,16 @@ const getProducts = async (req, res) => {
       return;
     }
 
-    const meta = await productsModel.getMetaProducts(query);
+    const meta = await productsModel.getMetaProducts({
+      ...query,
+      name: query.name || "",
+    });
     res.status(200).json({
       data: result.rows,
       meta,
     });
   } catch (err) {
-    // console.log(err.message);
+    console.log(err.message);
     res.status(500).json({
       msg: "Internal Server Error",
     });

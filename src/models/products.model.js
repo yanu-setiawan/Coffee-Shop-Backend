@@ -105,35 +105,58 @@ const getProducts = (query) => {
 //   });
 // };
 
-const getMetaProducts = (q) => {
+const getMetaProducts = (info) => {
   return new Promise((resolve, reject) => {
-    console.log(q);
-    let sqlQuery = "SELECT COUNT(*) AS total_data FROM products WHERE id  <> 1";
-    if (q.search) {
-      sqlQuery += ` AND LOWER(name_product) LIKE LOWER('%${q.search}%')`;
+    console.log(info);
+    let sqlQuery = `SELECT COUNT(*) AS total_data FROM products p join categories c on p.category_id = c.id WHERE lower(p.name_product) LIKE lower('%${info.name}%')`;
+
+    if (info.categories) {
+      sqlQuery += ` AND p.category_id = ${info.categories}`;
     }
-    if (q.category) {
-      sqlQuery += ` AND category_id = ${q.category}`;
+
+    if (info.favorite) {
+      sqlQuery += ` AND p.favorite = ${info.favorite}`;
     }
     db.query(sqlQuery, (error, result) => {
       if (error) {
         reject(error);
         return;
       }
+      console.log(result.rows[0]);
       const totalData = parseInt(result.rows[0].total_data);
-      const limit = parseInt(q.limit) || 12;
-      const page = parseInt(q.page) || 1;
+      const limit = parseInt(info.limit) || 12;
+      const page = parseInt(info.page) || 1;
       const totalPage = Math.ceil(totalData / limit);
       let next = "";
       let prev = "";
       if (page < totalPage) {
         next = `/products?page=${page + 1}&limit=${limit}`;
+        if (info.categories) {
+          next += `&categories=${info.categories}`;
+        }
+
+        if (info.favorite) {
+          next += `&favorite=${info.favorite}`;
+        }
+        if (info.order) {
+          next += `&order=${info.order}`;
+        }
       } else {
         next = null;
       }
 
       if (page > 1) {
         prev = `/products?page=${page - 1}&limit=${limit}`;
+        if (info.categories) {
+          prev += `&categories=${info.categories}`;
+        }
+
+        if (info.favorite) {
+          prev += `&favorite=${info.favorite}`;
+        }
+        if (info.order) {
+          prev += `&order=${info.order}`;
+        }
       } else {
         prev = null;
       }
