@@ -52,21 +52,21 @@ const insertUsers = (data) => {
     const values = [data.email, data.password, data.phone_number];
     db.query(sql, values, (err, result) => {
       if (err) return reject(err);
-      resolve(result);
+      resolve(result.rows);
     });
   });
 };
 
-// const insertProfile = (id) => {
-//   return new Promise((resolve, reject) => {
-//     const sql = "insert id into users_profile RETURNING *";
-//     const values = [id.users];
-//     db.query(sql, values, (err, result) => {
-//       if (err) return reject(err);
-//       resolve(result);
-//     });
-//   });
-// };
+const insertProfile = (id) => {
+  return new Promise((resolve, reject) => {
+    const sql = "insert into users_profile (user_id) values ($1)";
+    const values = [id];
+    db.query(sql, values, (err, result) => {
+      if (err) return reject(err);
+      resolve(result);
+    });
+  });
+};
 
 const updateUser = (params, body) => {
   return new Promise((resolve, reject) => {
@@ -93,7 +93,7 @@ const deleteUser = (u) => {
 };
 const getEmail = (email) => {
   return new Promise((resolve, reject) => {
-    const sql = "SELECT * FROM users WHERE email = $1";
+    const sql = "SELECT count(*) as sum FROM users WHERE email = $1";
     const values = [email];
     db.query(sql, values, (err, result) => {
       if (err) return reject(err);
@@ -109,4 +109,5 @@ module.exports = {
   updateUser,
   deleteUser,
   getEmail,
+  insertProfile,
 };

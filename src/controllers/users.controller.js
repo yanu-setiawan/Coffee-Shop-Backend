@@ -68,7 +68,7 @@ const insertUsers = async (req, res) => {
   try {
     // Cek apakah email sudah terdaftar
     const emailExists = await usersModel.getEmail(req.body.email);
-    if (emailExists.rows.length > 0) {
+    if (emailExists.rows[0].sum > 0) {
       return res.status(400).json({
         msg: "Email / Phone Number sudah terdaftar",
       });
@@ -79,9 +79,9 @@ const insertUsers = async (req, res) => {
       password: bcrypt.hashSync(req.body.password, 10),
       phone_number: req.body.phone_number,
     });
-    // const insertUserProfile = await usersModel.insertProfile(result.id);
+    await usersModel.insertProfile(result[0].id);
     res.status(201).json({
-      data: result.rows,
+      data: result,
       msg: "User registered successfully!",
     });
   } catch (err) {
