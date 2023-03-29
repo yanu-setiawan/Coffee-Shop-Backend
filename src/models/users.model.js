@@ -57,6 +57,17 @@ const insertUsers = (data) => {
   });
 };
 
+const insertProfile = (id) => {
+  return new Promise((resolve, reject) => {
+    const sql = "insert id into users_profile RETURNING *";
+    const values = [id.users];
+    db.query(sql, values, (err, result) => {
+      if (err) return reject(err);
+      resolve(result);
+    });
+  });
+};
+
 const updateUser = (params, body) => {
   return new Promise((resolve, reject) => {
     const sql =
@@ -98,4 +109,5 @@ module.exports = {
   updateUser,
   deleteUser,
   getEmail,
+  insertProfile,
 };

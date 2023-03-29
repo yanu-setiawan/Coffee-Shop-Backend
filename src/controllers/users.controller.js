@@ -79,6 +79,7 @@ const insertUsers = async (req, res) => {
       password: bcrypt.hashSync(req.body.password, 10),
       phone_number: req.body.phone_number,
     });
+    // const insertUserProfile = await usersModel.insertProfile(result.id);
     res.status(201).json({
       data: result.rows,
       msg: "User registered successfully!",
