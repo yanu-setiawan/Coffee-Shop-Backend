@@ -113,6 +113,98 @@ const getPhone = (phone_number) => {
   });
 };
 
+const getUserProfile = (params) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT u.email, u.phone_number, up.address, up.display_name, up.first_name, up.last_name, up.birth_date, up.image,up.gender
+    FROM users_profile up 
+    JOIN users u on u.id = up.user_id
+    WHERE u.id = $1;`;
+    const values = [params.id];
+    db.query(sql, values, (error, result) => {
+      if (error) {
+        console.log(error);
+        reject(error);
+        return;
+      }
+      resolve(result);
+    });
+  });
+};
+
+const updateProfile = (params, body, fileLink) => {
+  return new Promise((resolve, reject) => {
+    const updateEntries = {};
+    const values = [];
+    let setClause = "";
+
+    // Cek apakah field name_product ada pada body
+    if (body.first_name) {
+      updateEntries.first_name = body.first_name;
+      values.push(body.first_name);
+      setClause += "first_name = $" + values.length + ", ";
+    }
+
+    if (body.last_name) {
+      updateEntries.last_name = body.last_name;
+      values.push(body.last_name);
+      setClause += "last_name = $" + values.length + ", ";
+    }
+
+    if (body.display_name) {
+      updateEntries.display_name = body.display_name;
+      values.push(body.display_name);
+      setClause += "display_name = $" + values.length + ", ";
+    }
+    if (body.address) {
+      // Jika ada, tambahkan field address dan value-nya ke objek updateEntries
+      updateEntries.address = body.address;
+      values.push(body.address);
+      setClause += "address = $" + values.length + ", ";
+    }
+    // Cek apakah field price ada pada body
+    if (body.gender) {
+      // Jika ada, tambahkan field gender dan value-nya ke objek updateEntries
+      updateEntries.gender = body.gender;
+      values.push(body.gender);
+      setClause += "gender = $" + values.length + ", ";
+    }
+    // Cek apakah field category_id ada pada body
+    if (body.birth_date) {
+      updateEntries.birth_date = body.birth_date;
+      values.push(body.birth_date);
+      setClause += "birth_date = $" + values.length + ", ";
+    }
+
+    // Cek apakah fileLink (path ke file gambar) ada
+    if (fileLink) {
+      updateEntries.image = fileLink;
+      values.push(fileLink);
+      setClause += "image = $" + values.length + ", ";
+    }
+
+    // Hilangkan trailing comma dan space pada setClause
+    setClause = setClause.slice(0, -2);
+
+    // Push value params.id (id produk yang akan diupdate) ke dalam array values
+    values.push(params.id);
+
+    // Bangun string SQL dengan menggunakan setClause dan parameter values
+    const sql =
+      "UPDATE users_profile SET " +
+      setClause +
+      " WHERE user_id = $" +
+      values.length +
+      " RETURNING *";
+
+    // Eksekusi query ke database dengan menggunakan string SQL dan parameter values
+    db.query(sql, values, (err, result) => {
+      if (err) return reject(err);
+      // Resolve dengan hasil query (updated product)
+      resolve(result);
+    });
+  });
+};
+
 module.exports = {
   getUsers,
   getUserDetail,
@@ -122,4 +214,6 @@ module.exports = {
   getEmail,
   insertProfile,
   getPhone,
+  getUserProfile,
+  updateProfile,
 };

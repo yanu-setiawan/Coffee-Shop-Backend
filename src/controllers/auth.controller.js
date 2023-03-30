@@ -2,6 +2,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 // const { sendToMail } = require("../helpers/sendMailer");
 const authModel = require("../models/auth.model");
+// const profileModel = require("../models/profile.model");
+
 // eslint-disable-next-line no-unused-vars
 const { jwtSecret, user } = require("../configs/environment");
 
@@ -13,7 +15,8 @@ const login = async (req, res) => {
       return res.status(401).json({
         msg: "Email/Password Salah",
       });
-    const { id, email, password, role_id } = result.rows[0];
+    const { id, password, role_id, image } = result.rows[0];
+    console.log(result.rows[0]);
     const isPasswordValid = await bcrypt.compare(body.password, password);
     console.log(isPasswordValid);
     if (!isPasswordValid)
@@ -21,19 +24,22 @@ const login = async (req, res) => {
         msg: "Email/Password Salah",
       });
 
-    const payload = {
-      id,
-      email,
-      role_id,
-    };
     const jwtOptions = {
       expiresIn: "5m",
+    };
+    const payload = {
+      id,
+      role_id,
+      image,
     };
     jwt.sign(payload, jwtSecret, jwtOptions, (err, token) => {
       if (err) throw err;
       res.status(200).json({
         msg: "Selamat Datang",
-        data: { token },
+        id,
+        role_id, //data:{...payload,token}
+        image,
+        token,
       });
     });
   } catch (error) {

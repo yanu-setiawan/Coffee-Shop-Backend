@@ -71,43 +71,6 @@ const getProducts = (query) => {
   });
 };
 
-// const getMetaProducts = (q) => {
-//   return new Promise((resolve, reject) => {
-//     let sql = "select count(*) as total_data from products p";
-//     db.query(sql, (error, result) => {
-//       if (error) {
-//         reject(error);
-//         return;
-//       }
-//       const totalData = parseInt(result.rows[0].total_data);
-
-//       const page = parseInt(q.page) || 1;
-//       const limit = parseInt(q.limit) || 12;
-//       const totalPage = Math.ceil(totalData / limit);
-//       const nextPage = `/products?page=${
-//         page + 1 <= totalPage ? page + 1 : null
-//       }&limit=${limit} `;
-
-//       const prevPage = `/products?page=${
-//         page - 1 > 0 ? page - 1 : null
-//       }&limit=${limit}`;
-
-//       let next = nextPage;
-//       let prev = prevPage;
-
-//       if (page === 1) prev = null;
-//       if (page === totalPage) next = null;
-//       const meta = {
-//         totalData,
-//         next,
-//         prev,
-//         totalPage,
-//       };
-//       resolve(meta);
-//     });
-//   });
-// };
-
 const getMetaProducts = (info) => {
   return new Promise((resolve, reject) => {
     console.log(info);
@@ -125,7 +88,7 @@ const getMetaProducts = (info) => {
         reject(error);
         return;
       }
-      console.log(result.rows[0]);
+      // console.log(result.rows[0]);
       const totalData = parseInt(result.rows[0].total_data);
       const limit = parseInt(info.limit) || 12;
       const page = parseInt(info.page) || 1;
