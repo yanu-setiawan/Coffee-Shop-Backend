@@ -102,6 +102,17 @@ const getEmail = (email) => {
   });
 };
 
+const getPhone = (phone_number) => {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT count(*) as sum FROM users WHERE phone_number = $1";
+    const values = [phone_number];
+    db.query(sql, values, (err, result) => {
+      if (err) return reject(err);
+      resolve(result);
+    });
+  });
+};
+
 module.exports = {
   getUsers,
   getUserDetail,
@@ -110,4 +121,5 @@ module.exports = {
   deleteUser,
   getEmail,
   insertProfile,
+  getPhone,
 };

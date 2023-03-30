@@ -33,7 +33,7 @@ const login = async (req, res) => {
       if (err) throw err;
       res.status(200).json({
         msg: "Selamat Datang",
-        data: { ...payload, token },
+        data: { token },
       });
     });
   } catch (error) {

@@ -73,6 +73,12 @@ const insertUsers = async (req, res) => {
         msg: "Email / Phone Number sudah terdaftar",
       });
     }
+    const phoneExists = await usersModel.getPhone(req.body.phone_number);
+    if (phoneExists.rows[0].sum > 0) {
+      return res.status(400).json({
+        msg: "Email / Phone Number sudah terdaftar",
+      });
+    }
     // Jika email belum terdaftar, lakukan insert
     const result = await usersModel.insertUsers({
       email: req.body.email,
