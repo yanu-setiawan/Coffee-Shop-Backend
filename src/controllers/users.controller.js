@@ -66,6 +66,30 @@ const getUsers = async (req, res) => {
 //     });
 //   }
 // };
+// const changePassword = require("./changePassword");
+
+const changePassword = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const { old_password, new_password } = req.body;
+
+    await usersModel.changePassword(
+      { id: userId },
+      { old_password, new_password }
+    );
+
+    res.status(200).json({
+      message: "Password changed successfully",
+    });
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({
+      msg: "Internal Server Error cuy",
+    });
+  }
+};
+
+// module.exports = changePasswordController;
 
 const getUserProfile = async (req, res) => {
   try {
@@ -215,4 +239,5 @@ module.exports = {
   deleteUser,
   getUserProfile,
   updateProfile,
+  changePassword,
 };

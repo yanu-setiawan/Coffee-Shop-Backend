@@ -4,7 +4,7 @@ const express = require("express");
 
 // create express application
 const app = express();
-app.use(cors({ origin: "*" }));
+app.use(cors());
 
 const { serverPort } = require("./src/configs/environment");
 const PORT = serverPort || 8080;

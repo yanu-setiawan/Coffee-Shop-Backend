@@ -1,4 +1,5 @@
 const db = require("../configs/postgre");
+const bcrypt = require("bcrypt");
 
 const getUsers = (q) => {
   return new Promise((resolve, reject) => {
@@ -77,6 +78,46 @@ const updateUser = (params, body) => {
     db.query(sql, values, (err, result) => {
       if (err) return reject(err);
       resolve(result);
+    });
+  });
+};
+
+const changePassword = (params, body) => {
+  return new Promise((resolve, reject) => {
+    // Retrieve user from database
+    const sql = "SELECT * FROM users WHERE id = $1";
+    const values = [params.id];
+    db.query(sql, values, (err, result) => {
+      if (err) return reject(err);
+
+      if (result.rows.length === 0) {
+        return reject(new Error("User not found"));
+      }
+
+      const user = result.rows[0];
+
+      // Compare old password with the hash in the database
+      bcrypt.compare(body.old_password, user.password, (err, isMatch) => {
+        if (err) return reject(err);
+
+        if (!isMatch) {
+          return reject(new Error("Old password does not match"));
+        }
+
+        // Hash new password
+        bcrypt.hash(body.new_password, 10, (err, hashedPassword) => {
+          if (err) return reject(err);
+          console.log(err);
+
+          // Update user's password in the database
+          const updateSql = "UPDATE users SET password = $1 WHERE id = $2";
+          const updateValues = [hashedPassword, user.id];
+          db.query(updateSql, updateValues, (err, result) => {
+            if (err) return reject(err);
+            resolve(result);
+          });
+        });
+      });
     });
   });
 };
@@ -216,4 +257,5 @@ module.exports = {
   getPhone,
   getUserProfile,
   updateProfile,
+  changePassword,
 };

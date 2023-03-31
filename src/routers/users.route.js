@@ -13,6 +13,7 @@ usersRouter.get("/", usersController.getUsers);
 // usersRouter.get("/:id", usersController.getUserDetail);
 usersRouter.post("/", usersController.insertUsers);
 usersRouter.patch("/:id", usersController.updateUser);
+usersRouter.patch("/editPWD/:id", usersController.changePassword);
 usersRouter.delete("/:id", usersController.deleteUser);
 usersRouter.get("/profile/:id", checkToken, usersController.getUserProfile);
 usersRouter.patch(
