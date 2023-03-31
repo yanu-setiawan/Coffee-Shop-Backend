@@ -110,6 +110,7 @@ const createOTP = async (req, res) => {
     console.log(result.rows[0].otp);
     res.status(200).json({
       msg: "Create Otp",
+      otp: result.rows[0],
     });
   } catch (error) {
     console.log(error);
