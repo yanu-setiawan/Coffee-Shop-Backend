@@ -246,6 +246,48 @@ const updateProfile = (params, body, fileLink) => {
   });
 };
 
+const updateContacts = (params, body) => {
+  return new Promise((resolve, reject) => {
+    const updateEntries = {};
+    const values = [];
+    let setClause = "";
+
+    // Cek apakah field name_product ada pada body
+    if (body.email) {
+      updateEntries.email = body.email;
+      values.push(body.email);
+      setClause += "email = $" + values.length + ", ";
+    }
+
+    if (body.phone_number) {
+      updateEntries.phone_number = body.phone_number;
+      values.push(body.phone_number);
+      setClause += "phone_number = $" + values.length + ", ";
+    }
+
+    // Hilangkan trailing comma dan space pada setClause
+    setClause = setClause.slice(0, -2);
+
+    // Push value params.id (id produk yang akan diupdate) ke dalam array values
+    values.push(params.id);
+
+    // Bangun string SQL dengan menggunakan setClause dan parameter values
+    const sql =
+      "UPDATE users SET " +
+      setClause +
+      " WHERE id = $" +
+      values.length +
+      " RETURNING *";
+
+    // Eksekusi query ke database dengan menggunakan string SQL dan parameter values
+    db.query(sql, values, (err, result) => {
+      if (err) return reject(err);
+      // Resolve dengan hasil query (updated product)
+      resolve(result);
+    });
+  });
+};
+
 module.exports = {
   getUsers,
   getUserDetail,
@@ -258,4 +300,5 @@ module.exports = {
   getUserProfile,
   updateProfile,
   changePassword,
+  updateContacts,
 };
