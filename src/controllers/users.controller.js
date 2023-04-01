@@ -157,11 +157,9 @@ const updateProfile = async (req, res) => {
     const result = await usersModel.updateProfile(params, body, fileLink); // sertakan fileLink pada pemanggilan productModel.updateProducts
     const resultContacts = await usersModel.updateContacts(params, body);
     res.status(200).json({
-      data: {
-        ...result.rows[0],
-        email: resultContacts.rows[0].email,
-        phone_number: resultContacts.rows[0].phone_number,
-      },
+      ...result.rows[0],
+      email: resultContacts.rows[0].email,
+      phone_number: resultContacts.rows[0].phone_number,
       msg: "Update Berhasil",
     });
   } catch (err) {
