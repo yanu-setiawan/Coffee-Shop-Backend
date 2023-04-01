@@ -25,7 +25,7 @@ const login = async (req, res) => {
       });
 
     const jwtOptions = {
-      expiresIn: "5m",
+      expiresIn: "24h",
     };
     const payload = {
       id,
