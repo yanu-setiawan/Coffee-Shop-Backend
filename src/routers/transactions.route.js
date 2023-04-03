@@ -12,4 +12,7 @@ transactionsRouter.post(
   transactionsController.createTransaction
 );
 
+transactionsRouter.get("/", checkToken, transactionsController.getHistory);
+module.exports = transactionsRouter;
+
 module.exports = transactionsRouter;
