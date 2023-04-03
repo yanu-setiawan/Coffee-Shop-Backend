@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const db = require("../configs/postgre");
 const transactionsModel = require("../models/transactions.model");
 
@@ -63,20 +64,20 @@ const deleteTransaction = async (req, res) => {
   try {
     client.query("BEGIN");
     const result = await transactionsModel.deleteHistory(client, req);
-    if (result.rowCount === 0) {
-      res.status(404).json({
-        msg: "Data Not Found...",
-      });
-      return;
-    }
+    // if (result.rowCount === 0) {
+    //   res.status(404).json({
+    //     msg: "Data Not Found...",
+    //   });
+    //   return;
+    // }
     client.query("COMMIT");
     const resultAll = await transactionsModel.deleteTransaction(client, req);
-    if (resultAll.rowCount === 0) {
-      res.status(404).json({
-        msg: "Data Not Found...",
-      });
-      return;
-    }
+    // if (resultAll.rowCount === 0) {
+    //   res.status(404).json({
+    //     msg: "Data Not Found...",
+    //   });
+    //   return;
+    // }
     res.status(200).json({
       msg: "Delete Success...",
     });
