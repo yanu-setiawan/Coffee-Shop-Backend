@@ -13,6 +13,13 @@ transactionsRouter.post(
 );
 
 transactionsRouter.get("/", checkToken, transactionsController.getHistory);
+
+transactionsRouter.delete(
+  "/:id",
+  checkToken,
+  transactionsController.deleteTransaction
+);
+
 module.exports = transactionsRouter;
 
 module.exports = transactionsRouter;

@@ -77,9 +77,31 @@ const getHistories = (info) => {
   });
 };
 
+const deleteHistory = (client, info) => {
+  return new Promise((resolve, reject) => {
+    const sqlQuery = "DELETE FROM transactions WHERE id = $1";
+    client.query(sqlQuery, [info.params.id], (error, result) => {
+      if (error) return reject(error);
+      resolve(result);
+    });
+  });
+};
+const deleteTransaction = (client, info) => {
+  return new Promise((resolve, reject) => {
+    const sqlQuery =
+      "DELETE FROM transactions_product_sizes WHERE transactions_id = $1";
+    client.query(sqlQuery, [info.params.id], (error, result) => {
+      if (error) return reject(error);
+      resolve(result);
+    });
+  });
+};
+
 module.exports = {
   createTransaction,
   createDetailTransaction,
   getTransaction,
   getHistories,
+  deleteTransaction,
+  deleteHistory,
 };
