@@ -15,7 +15,8 @@ const login = async (req, res) => {
       return res.status(401).json({
         msg: "Email/Password Salah",
       });
-    const { id, password, role_id, image } = result.rows[0];
+    const { id, password, role_id, image, email, phone_number } =
+      result.rows[0];
     console.log(result.rows[0]);
     const isPasswordValid = await bcrypt.compare(body.password, password);
     console.log(isPasswordValid);
@@ -31,6 +32,8 @@ const login = async (req, res) => {
       id,
       role_id,
       image,
+      email,
+      phone_number,
     };
     jwt.sign(payload, jwtSecret, jwtOptions, (err, token) => {
       if (err) throw err;
@@ -40,6 +43,8 @@ const login = async (req, res) => {
         role_id, //data:{...payload,token}
         image,
         token,
+        email,
+        phone_number,
       });
     });
   } catch (error) {
