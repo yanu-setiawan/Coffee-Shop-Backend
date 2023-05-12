@@ -2,7 +2,7 @@
 const usersModel = require("../models/users.model");
 const bcrypt = require("bcrypt");
 const { error } = require("../utils/response");
-const { uploader } = require("../utils/cloudinary");
+const { uploaderUsers } = require("../utils/cloudinaryUser");
 
 const getUsers = async (req, res) => {
   try {
@@ -111,7 +111,7 @@ const cloudUpload = async (req, res) => {
   try {
     // upload ke cloud
     const { params } = req;
-    const { data, err, msg } = await uploader(req, "product", params.id);
+    const { data, err, msg } = await uploaderUsers(req, "users", params.id);
     if (err) throw { msg, err };
     if (!data) return res.status(200).json({ msg: "No File Uploaded" });
     return data;
