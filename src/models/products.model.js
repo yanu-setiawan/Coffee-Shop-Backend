@@ -48,10 +48,10 @@ const getProducts = (query) => {
     }
 
     let order = "p.id ASC";
-    if (query.order === "cheapest") order = "p.price ASC";
-    if (query.order === "priciest") order = "p.price DESC";
-    if (query.order === "newest") order = "p.id ASC";
-    if (query.order === "latest") order = "p.id DESC";
+    if (query.order === "Cheapest") order = "p.price ASC";
+    if (query.order === "Priciest") order = "p.price DESC";
+    if (query.order === "Oldest") order = "p.id ASC";
+    if (query.order === "Newest") order = "p.id DESC";
 
     sqlQuery += ` ORDER BY ${order}`;
 
