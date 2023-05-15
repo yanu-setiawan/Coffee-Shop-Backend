@@ -64,12 +64,12 @@ const getTransaction = (client, transactionId) => {
 
 const getHistories = (info) => {
   return new Promise((resolve, reject) => {
-    const sqlQuery = `SELECT tps.transaction_id, p.image, p.name_product, p.price, tps.size_id, 
-        tps.qty, d.delivery_method  FROM transaction_product_sizes tps
-        JOIN transactions t  ON t.id = tps.transaction_id
-        JOIN products p ON p.id = tps.product_id
-        JOIN deliveries d ON d.id = t.delivery_id
-         WHERE t.user_id  = $1`;
+    const sqlQuery = `SELECT DISTINCT ON (t.id) t.id, d.delivery_method, t.created_at, tps.product_id, p.name_product, p.price, p.image
+      FROM transactions t
+      JOIN deliveries d ON d.id = t.delivery_id
+      JOIN transaction_product_sizes tps ON tps.transaction_id = t.id
+      JOIN products p ON p.id = tps.product_id
+ WHERE user_id = $1`;
     db.query(sqlQuery, [info.id], (error, result) => {
       if (error) return reject(error);
       resolve(result);
@@ -86,6 +86,7 @@ const deleteHistory = (client, info) => {
     });
   });
 };
+
 const deleteTransaction = (client, info) => {
   return new Promise((resolve, reject) => {
     const sqlQuery =
