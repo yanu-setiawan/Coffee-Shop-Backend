@@ -4,6 +4,7 @@
 const productsModel = require("../models/products.model");
 const { uploader } = require("../utils/cloudinary");
 const randomstring = require("randomstring");
+const crypto = require("crypto");
 
 const getProducts = async (req, res) => {
   try {
@@ -84,13 +85,53 @@ const getProductDetail = async (req, res) => {
 //   }
 // };
 
+// const insertProducts = async (req, res) => {
+//   try {
+//     let fileLink;
+//     if (req.file) {
+//       // Unggah file ke cloud
+//       // generate a random string of length 10
+//       if (req.file) {
+//       // Unggah file ke cloud
+//       // generate a random string of length 10
+//       const randomString = crypto.randomBytes(5).toString('hex');
+
+//       // get the file extension
+//       const ext = req.file.originalname.split(".").pop();
+
+//       // create a filename using the random string and file extension
+//       const filename = `${randomString}.${ext}`;
+
+//       const cloudResult = await cloudUpload(req, res, {
+//         prefix: "product",
+//         id: filename,
+//       });
+//       fileLink = cloudResult.secure_url;
+//       console.log(fileLink);
+//     }
+//     const { body } = req;
+//     if (!body || !fileLink) {
+//       return res.status(400).json({ msg: "Input cannot be empty" });
+//     }
+//     const result = await productsModel.insertProducts(body, fileLink);
+//     res.status(201).json({
+//       data: result.rows[0],
+//       msg: "Insert success",
+//     });
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json({
+//       msg: "Terjadi kesalahan pada server",
+//     });
+//   }
+// };
 const insertProducts = async (req, res) => {
   try {
     let fileLink;
     if (req.file) {
       // Unggah file ke cloud
       // generate a random string of length 10
-      const randomString = randomstring.generate(10);
+      const randomString = crypto.randomBytes(5).toString("hex");
 
       // get the file extension
       const ext = req.file.originalname.split(".").pop();
@@ -98,11 +139,15 @@ const insertProducts = async (req, res) => {
       // create a filename using the random string and file extension
       const filename = `${randomString}.${ext}`;
 
-      const cloudResult = await cloudUpload(req, res, {
-        prefix: "product",
-        id: filename,
-      });
-      fileLink = cloudResult.secure_url;
+      const { data, err, msg } = await uploader(req, "product", randomString);
+      if (err) throw { msg, err };
+      if (!data) return res.status(200).json({ msg: "No File Uploaded" });
+
+      // const cloudResult = await cloudUpload(req, res, {
+      //   prefix: "product",
+      //   id: filename,
+      // });
+      fileLink = data.secure_url;
       console.log(fileLink);
     }
     const { body } = req;
@@ -121,7 +166,6 @@ const insertProducts = async (req, res) => {
     });
   }
 };
-
 const cloudUpload = async (req, res) => {
   try {
     // upload ke cloud

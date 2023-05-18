@@ -37,7 +37,7 @@ const db = require("../configs/postgre");
 
 const getProducts = (query) => {
   return new Promise((resolve, reject) => {
-    let sqlQuery = `select p.id ,p.name_product ,p.price, p.favorite, c.name as category,image  from  products p join categories c on p.category_id = c.id WHERE lower(p.name_product) LIKE lower('%${query.name}%')`;
+    let sqlQuery = `select p.id ,p.name_product ,p.price, p.favorite,p.description, c.name as category,image  from  products p join categories c on p.category_id = c.id WHERE lower(p.name_product) LIKE lower('%${query.name}%')`;
 
     if (query.categories) {
       sqlQuery += ` AND p.category_id = ${query.categories}`;
@@ -154,8 +154,14 @@ const getProductDetail = (p) => {
 const insertProducts = (body, fileLink) => {
   return new Promise((resolve, reject) => {
     const sql =
-      "insert into products (name_product, price,category_id,image) values ($1, $2, $3,$4) RETURNING *";
-    const values = [body.name_product, body.price, body.category_id, fileLink];
+      "insert into products (name_product, price,category_id,description,image) values ($1, $2, $3,$4,$5) RETURNING *";
+    const values = [
+      body.name_product,
+      body.price,
+      body.category_id,
+      body.description,
+      fileLink,
+    ];
     db.query(sql, values, (err, result) => {
       if (err) return reject(err);
       resolve(result);
@@ -204,6 +210,13 @@ const updateProducts = (params, body, fileLink) => {
       updateEntries.category_id = body.category_id;
       values.push(body.category_id);
       setClause += "category_id = $" + values.length + ", ";
+    }
+
+    if (body.description) {
+      // Jika ada, tambahkan field description dan value-nya ke objek updateEntries
+      updateEntries.description = body.description;
+      values.push(body.description);
+      setClause += "description = $" + values.length + ", ";
     }
 
     // Cek apakah fileLink (path ke file gambar) ada

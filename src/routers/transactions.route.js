@@ -13,6 +13,11 @@ transactionsRouter.post(
 );
 
 transactionsRouter.get("/", checkToken, transactionsController.getHistory);
+transactionsRouter.get(
+  "/monthlyReport",
+  checkToken,
+  transactionsController.getReport
+);
 
 transactionsRouter.delete(
   "/:id",

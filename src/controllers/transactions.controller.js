@@ -90,4 +90,19 @@ const deleteTransaction = async (req, res) => {
   }
 };
 
-module.exports = { createTransaction, getHistory, deleteTransaction };
+const getReport = async (req, res) => {
+  try {
+    const result = await transactionsModel.getReport();
+    res.status(200).json({ data: result.rows });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: "Terjadi kesalahan pada server" });
+  }
+};
+
+module.exports = {
+  createTransaction,
+  getHistory,
+  deleteTransaction,
+  getReport,
+};

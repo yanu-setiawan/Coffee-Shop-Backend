@@ -77,6 +77,33 @@ const getHistories = (info) => {
   });
 };
 
+const getReport = () => {
+  return new Promise((resolve, reject) => {
+    const sqlQuery = `SELECT 
+    TRIM(TO_CHAR(months.month, 'Month')) AS month,
+    COALESCE(SUM(tps.subtotal), 0) AS total_sum
+FROM 
+    generate_series(
+        DATE_TRUNC('month', NOW() - INTERVAL '6 months'),
+        DATE_TRUNC('month', NOW()),
+        '1 month'
+    ) AS months(month)
+LEFT JOIN 
+    transactions AS t ON DATE_TRUNC('month', t.created_at) = months.month
+    LEFT JOIN transaction_product_sizes AS tps ON t.id = tps.transaction_id
+GROUP BY 
+    months.month
+ORDER BY
+    months.month;
+
+`;
+    db.query(sqlQuery, (error, result) => {
+      if (error) return reject(error);
+      resolve(result);
+    });
+  });
+};
+
 const deleteHistory = (client, info) => {
   return new Promise((resolve, reject) => {
     const sqlQuery = "DELETE FROM transactions WHERE id = $1";
@@ -105,4 +132,5 @@ module.exports = {
   getHistories,
   deleteTransaction,
   deleteHistory,
+  getReport,
 };
