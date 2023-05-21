@@ -104,10 +104,53 @@ ORDER BY
   });
 };
 
+const getAllOrder = () => {
+  return new Promise((resolve, reject) => {
+    const sqlQuery = `SELECT DISTINCT ON (t.id) t.id, t.status_id, d.delivery_method, t.created_at, tps.product_id, p.name_product, p.price, p.image
+      FROM transactions t
+      JOIN deliveries d ON d.id = t.delivery_id
+      JOIN transaction_product_sizes tps ON tps.transaction_id = t.id
+      JOIN products p ON p.id = tps.product_id
+      where t.status_id <> 2
+      ORDER BY t.id asc`;
+    db.query(sqlQuery, (error, result) => {
+      if (error) return reject(error);
+      resolve(result);
+    });
+  });
+};
+
+const getDoneOrder = () => {
+  return new Promise((resolve, reject) => {
+    const sqlQuery = ` SELECT DISTINCT ON (t.id) t.id, t.status_id, d.delivery_method, t.created_at, tps.product_id, p.name_product, p.price, p.image
+      FROM transactions t
+      JOIN deliveries d ON d.id = t.delivery_id
+      JOIN transaction_product_sizes tps ON tps.transaction_id = t.id
+      JOIN products p ON p.id = tps.product_id
+      where t.status_id = 2
+      ORDER BY t.id desc`;
+    db.query(sqlQuery, (error, result) => {
+      if (error) return reject(error);
+      resolve(result);
+    });
+  });
+};
+
 const deleteHistory = (client, info) => {
   return new Promise((resolve, reject) => {
     const sqlQuery = "DELETE FROM transactions WHERE id = $1";
     client.query(sqlQuery, [info.params.id], (error, result) => {
+      if (error) return reject(error);
+      resolve(result);
+    });
+  });
+};
+
+const changeStatusOrder = (info) => {
+  return new Promise((resolve, reject) => {
+    const sqlQuery =
+      "UPDATE transactions  SET status_id = 2 WHERE id = $1 RETURNING *";
+    db.query(sqlQuery, [info.id], (error, result) => {
       if (error) return reject(error);
       resolve(result);
     });
@@ -133,4 +176,7 @@ module.exports = {
   deleteTransaction,
   deleteHistory,
   getReport,
+  getAllOrder,
+  getDoneOrder,
+  changeStatusOrder,
 };
