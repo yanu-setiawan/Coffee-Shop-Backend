@@ -100,25 +100,25 @@ $ npm run dev
 
 ## 𓆙 Route
 
-| Endpoint                     |      Method      | Info         | Remark                                |
-| ---------------------------- | :--------------: | :----------- | :------------------------------------ |
-| /api/auth                    | `DELETE` `POST` `PATCH`  | Auth         | Login, Logout, Forgot Password                       |
-| /api/users                   |      `GET`       | User         | Get Users (admin)                        |
-| /api/users/register          |      `POST`      | Auth         | Register                              |
-| /api/users/account           |      `POST`      | User         | Change Password                       |
-| /api/users/profile/edit      |     `PATCH`      | User         | Change Profile                        |
-| /api/transactions            |      `GET`       | Transactions | History transactios all users( admin) |
-| /api/transactions/history    |      `GET`       | Transactions | History Transaction                   |
-| /api/transactions/create     |      `POST`      | Transactions | Create Transaction                    |
-| /api/transactions/edit/:id   |     `PATCH`      | Transactions | Edit Transaction (admin)              |
-| /api/transactions/delete/:id |     `DELETE`     | Transactions | Delete Transaction (admin)            |
-| /api/products                |   `POST` `GET`   | Products     | Create and See Products               |
-| /api/products/:id            | `PATCH` `DELETE` | Products     | Delete and Edit Products              |
-| /api/products/favorite       |      `GET`       | Products     | Products favorite                     |
-| /api/promo                   |      `GET`       | Promo        | Detail Promo                          |
-| /api/promo/create            |      `POST`      | Promo        | Add Promo                             |
-| /api/promo/edit/:id          |     `PATCH`      | Promo        | Edit Promo                            |
-| /api/promo/delete/:id        |     `DELETE`     | Promo        | Delete Promo                          |
+| Endpoint                       |      Method      | Info         | Remark                                |
+| ----------------------------   | :--------------: | :----------- | :------------------------------------ |
+| /api/auth                      |      `POST`      | Auth         | Login                                 |
+| /api/auth/logout               |      `DELETE`    | Auth         | LOGOUT                                |
+| /api/users                     |      `GET`       | User         | Get Users (admin)                     |
+| /api/users                     |      `POST`      | Auth         | Register                              |
+| /api/users/editPWD/:id         |      `POST`      | User         | Change Password                       |
+| /api/users/profile/:id         |     `PATCH`      | User         | Change Profile                        |
+| /api/transactions/get-all-order|      `GET`       | Transactions | History transactios all users( admin) |
+| /api/transactions              |      `GET`       | Transactions | History Transaction                   |
+| /api/transactions/create       |      `POST`      | Transactions | Create Transaction                    |
+| /api/transactions/delete/:id   |     `DELETE`     | Transactions | Delete Transaction (admin)            |
+| /api/products                  |   `POST` `GET`   | Products     | Create and See Products               |
+| /api/products/:id              | `PATCH` `DELETE` | Products     | Delete and Edit Products              |
+| /api/products/favorite         |      `GET`       | Products     | Products favorite                     |
+| /api/promo                     |      `GET`       | Promo        | Detail Promo                          |
+| /api/promo/                    |      `POST`      | Promo        | Add Promo                             |
+| /api/promo/:id                 |      `PATCH`     | Promo        | Edit Promo                            |
+| /api/promo/:id                 |     `DELETE`     | Promo        | Delete Promo                          |
 
 ## 𓆙 Documentation Postman
 
