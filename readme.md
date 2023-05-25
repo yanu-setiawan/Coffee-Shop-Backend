@@ -110,8 +110,8 @@ $ npm run dev
 | /api/users/profile/:id         |     `PATCH`      | User         | Change Profile                        |
 | /api/transactions/get-all-order|      `GET`       | Transactions | History transactios all users( admin) |
 | /api/transactions              |      `GET`       | Transactions | History Transaction                   |
-| /api/transactions/create       |      `POST`      | Transactions | Create Transaction                    |
-| /api/transactions/delete/:id   |     `DELETE`     | Transactions | Delete Transaction (admin)            |
+| /api/transactions/             |      `POST`      | Transactions | Create Transaction                    |
+| /api/transactions/:id          |     `DELETE`     | Transactions | Delete Transaction (admin)            |
 | /api/products                  |   `POST` `GET`   | Products     | Create and See Products               |
 | /api/products/:id              | `PATCH` `DELETE` | Products     | Delete and Edit Products              |
 | /api/products/favorite         |      `GET`       | Products     | Products favorite                     |
