@@ -1,177 +1,130 @@
-<a name="readme-top"></a>
-
+<a id="readme-top"></a>
 
 <!-- PROJECT LOGO -->
-[![Express Logo](https://i.cloudup.com/zfY6lL7eFa-3000x3000.png)](http://expressjs.com/)
+<br />
+<div align="center">
+  <a href="#">
+    <img src="./public/logo123.svg" alt="Logo" width="80" height="80">
+  </a>
 
-  Fast, unopinionated, minimalist web framework for [Node.js](http://nodejs.org).
+  <h2 align="center">Coffee Shop</h2>
 
-  [![NPM Version][npm-version-image]][npm-url]
-  [![NPM Install Size][npm-install-size-image]][npm-install-size-url]
-  [![NPM Downloads][npm-downloads-image]][npm-downloads-url]
+  <p align="center">
+    <a href="https://documenter.getpostman.com/view/26100678/2s93m62Mkp">Postman Documentation</a>
+    ·
+    <a href="#">Report Bug</a>
+    ·
+    <a href="#">Request Feature</a>
+  </p>
+</div>
 
-```js
-const express = require('express')
-const app = express()
+## Built With
 
-app.get('/', function (req, res) {
-  res.send('Hello World')
-})
+<p align="center">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=nodejs,express,postgres,vercel,mongo" />
+  </a>
+</p>
 
-app.listen(8080)
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## 𓆙 Table of Contents
+
+
+- [Table of Contents](#𓆙-Table-of-Contents)
+- [Requirement](#𓆙-Requirement)
+- [Installation](#)
+  - [Windows](#𓆙-Windows-Installation)
+  - [Linux](#𓆙_Linux_Installation)
+- [How to run](#𓆙-How-to-run)
+- [Route](#𓆙-Documentation-Postman)
+- [Documentation Postman](#𓆙-Documentation-Postman)
+
+## 𓆙 Requirement
+
+This repo require a [NodeJS](https://nodejs.org/)
+
+[ENV](#ENV) File
+
+## 𓆙 Windows Installation
+
+First of all, you need to install [Git](https://git-scm.com/download/win) & [NodeJS](https://nodejs.org/). Then open your git bash, and follow this:<br>
+
+```sh
+$ git clone https://github.com/yanu-setiawan/Coffee-Shop-Backend.git
+$ cd Coffee-Shop
 ```
 
-## Installation
+## 𓆙 Linux Installation
 
-This is a [Node.js](https://nodejs.org/en/) module available through the
-[npm registry](https://www.npmjs.com/).
-
-Before installing, [download and install Node.js](https://nodejs.org/en/download/).
-Node.js 0.10 or higher is required.
-
-If this is a brand new project, make sure to create a `package.json` first with
-the [`npm init` command](https://docs.npmjs.com/creating-a-package-json-file).
-
-Installation is done using the
-[`npm install` command](https://docs.npmjs.com/getting-started/installing-npm-packages-locally):
-
-```console
-$ npm install express
+```sh
+$ apt-get update
+$ apt-get install git-all
+$ apt-get install nodejs-current
+$ git clone https://github.com/yanu-setiawan/Coffee-Shop-Backend.git
+$ cd Coffee Shop
 ```
 
-Follow [our installing guide](http://expressjs.com/en/starter/installing.html)
-for more information.
+## 𓆙 How to run
 
-## Features
+1. Install file using [WINDOWS](#Windows-Installation) OR [LINUX](Linux-Installation)
 
-  * Robust routing
-  * Focus on high performance
-  * Super-high test coverage
-  * HTTP helpers (redirection, caching, etc)
-  * View system supporting 14+ template engines
-  * Content negotiation
-  * Executable for generating applications quickly
+2. Add .env file at root folder, and add following
 
-## Docs & Community
+```sh
+DB_HOST = "YOUR HOST"
+DB_DATABASE = "YOUR DB NAME"
+DB_PORT = "YOUR DB PORT"
+DB_USER = "YOUR DB USER"
+DB_PWD = "YOUR DB PASSWORD"
+SERVER_PORT = "YOUR LOCALHOST"
 
-  * [Website and Documentation](http://expressjs.com/) - [[website repo](https://github.com/expressjs/expressjs.com)]
-  * [#express](https://web.libera.chat/#express) on [Libera Chat](https://libera.chat) IRC
-  * [GitHub Organization](https://github.com/expressjs) for Official Middleware & Modules
-  * Visit the [Wiki](https://github.com/expressjs/express/wiki)
-  * [Google Group](https://groups.google.com/group/express-js) for discussion
-  * [Gitter](https://gitter.im/expressjs/express) for support and discussion
+JWT_SECRET = "YOUR SECRET JWT"
 
-**PROTIP** Be sure to read [Migrating from 3.x to 4.x](https://github.com/expressjs/express/wiki/Migrating-from-3.x-to-4.x) as well as [New features in 4.x](https://github.com/expressjs/express/wiki/New-features-in-4.x).
+MONGO_PWD = "YOUR MONGO PASSWORD"
+MONGO_DBNAME = "YOUR DB NAME"
+MONGO_USER = "YOUR USERNAME MONGO"
+MONGO_HOST = "YOUR MONGO HOST"
 
-## Quick Start
+CLOUD_NAME = "YOUR CLOUDNAME"
+CLOUD_KEY = "YOUR KEY CLOUD"
+CLOUD_SECRET = "YOUR KEY SECRET CLOUD "
 
-  The quickest way to get started with express is to utilize the executable [`express(1)`](https://github.com/expressjs/generator) to generate an application as shown below:
-
-  Install the executable. The executable's major version will match Express's:
-
-```console
-$ npm install -g express-generator@4
 ```
 
-  Create the app:
+3. Starting application
 
-```console
-$ express /tmp/foo && cd /tmp/foo
+```sh
+$ npm run dev
 ```
 
-  Install dependencies:
+## 𓆙 Route
 
-```console
-$ npm install express
-```
+| Endpoint                     |      Method      | Info         | Remark                                |
+| ---------------------------- | :--------------: | :----------- | :------------------------------------ |
+| /api/auth                    | `DELETE` `POST` `PATCH`  | Auth         | Login, Logout, Forgot Password                       |
+| /api/users                   |      `GET`       | User         | Get Users (admin)                        |
+| /api/users/register          |      `POST`      | Auth         | Register                              |
+| /api/users/account           |      `POST`      | User         | Change Password                       |
+| /api/users/profile/edit      |     `PATCH`      | User         | Change Profile                        |
+| /api/transactions            |      `GET`       | Transactions | History transactios all users( admin) |
+| /api/transactions/history    |      `GET`       | Transactions | History Transaction                   |
+| /api/transactions/create     |      `POST`      | Transactions | Create Transaction                    |
+| /api/transactions/edit/:id   |     `PATCH`      | Transactions | Edit Transaction (admin)              |
+| /api/transactions/delete/:id |     `DELETE`     | Transactions | Delete Transaction (admin)            |
+| /api/products                |   `POST` `GET`   | Products     | Create and See Products               |
+| /api/products/:id            | `PATCH` `DELETE` | Products     | Delete and Edit Products              |
+| /api/products/favorite       |      `GET`       | Products     | Products favorite                     |
+| /api/promo                   |      `GET`       | Promo        | Detail Promo                          |
+| /api/promo/create            |      `POST`      | Promo        | Add Promo                             |
+| /api/promo/edit/:id          |     `PATCH`      | Promo        | Edit Promo                            |
+| /api/promo/delete/:id        |     `DELETE`     | Promo        | Delete Promo                          |
 
-  Start the server:
+## 𓆙 Documentation Postman
 
-```console
-$ npm start
-```
+Click here [POSTMAN](https://documenter.getpostman.com/view/26100678/2s93m62Mkp)
 
-  View the website at: http://localhost:3000
+<BR>
+<BR>
 
-## Philosophy
-
-  The Express philosophy is to provide small, robust tooling for HTTP servers, making
-  it a great solution for single page applications, websites, hybrids, or public
-  HTTP APIs.
-
-  Express does not force you to use any specific ORM or template engine. With support for over
-  14 template engines via [Consolidate.js](https://github.com/tj/consolidate.js),
-  you can quickly craft your perfect framework.
-
-## Examples
-
-  To view the examples, clone the Express repo and install the dependencies:
-
-```console
-$ git clone https://github.com/expressjs/express.git --depth 1
-$ cd express
-$ npm install --save express-dependencies
-```
-
-  Then run whichever example you want:
-
-```console
-$ node examples/content-negotiation
-```
-
-## Contributing
-
-  [![Linux Build][github-actions-ci-image]][github-actions-ci-url]
-  [![Windows Build][appveyor-image]][appveyor-url]
-  [![Test Coverage][coveralls-image]][coveralls-url]
-
-The Express.js project welcomes all constructive contributions. Contributions take many forms,
-from code for bug fixes and enhancements, to additions and fixes to documentation, additional
-tests, triaging incoming pull requests and issues, and more!
-
-See the [Contributing Guide](Contributing.md) for more technical details on contributing.
-
-### Security Issues
-
-If you discover a security vulnerability in Express, please see [Security Policies and Procedures](Security.md).
-
-### Running Tests
-
-To run the test suite, first install the dependencies, then run `npm test`:
-
-```console
-$ npm install 
-$ npm test
-```
-
-## People
-
-The original author of Express is [TJ Holowaychuk](https://github.com/tj)
-
-The current lead maintainer is [Douglas Christopher Wilson](https://github.com/dougwilson)
-
-[List of all contributors](https://github.com/expressjs/express/graphs/contributors)
-
-## License
-
-  [MIT](LICENSE)
-
-[appveyor-image]: https://badgen.net/appveyor/ci/dougwilson/express/master?label=windows
-[appveyor-url]: https://ci.appveyor.com/project/dougwilson/express
-[coveralls-image]: https://badgen.net/coveralls/c/github/expressjs/express/master
-[coveralls-url]: https://coveralls.io/r/expressjs/express?branch=master
-[github-actions-ci-image]: https://badgen.net/github/checks/expressjs/express/master?label=linux
-[github-actions-ci-url]: https://github.com/expressjs/express/actions/workflows/ci.yml
-[npm-downloads-image]: https://badgen.net/npm/dm/express
-[npm-downloads-url]: https://npmcharts.com/compare/express?minimal=true
-[npm-install-size-image]: https://badgen.net/packagephobia/install/express
-[npm-install-size-url]: https://packagephobia.com/result?p=express
-[npm-url]: https://npmjs.org/package/express
-[npm-version-image]: https://badgen.net/npm/v/express
-
-
-
-
-
-
-
+<p align="center"> <samp><i>&copy; yanusetiawan </i></samp> </p>
