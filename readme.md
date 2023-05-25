@@ -37,6 +37,7 @@
   - [Windows](#𓆙-Windows-Installation)
   - [Linux](#𓆙_Linux_Installation)
 - [How to run](#𓆙-How-to-run)
+- [Related Projects](#𓆙-Related-Projects)
 - [Route](#𓆙-Documentation-Postman)
 - [Documentation Postman](#𓆙-Documentation-Postman)
 
@@ -97,6 +98,14 @@ CLOUD_SECRET = "YOUR KEY SECRET CLOUD "
 ```sh
 $ npm run dev
 ```
+
+## Related Projects
+
+[Coffee-Shop Website](https://github.com/yanu-setiawan/Coffee-Shop-React-App)
+
+[Coffee-Shop Mobile](https://github.com/yanu-setiawan/Coffee-Shop-Mobile)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 𓆙 Route
 
