@@ -4,7 +4,7 @@ const productsController = require("../controllers/products.controller");
 const { checkToken } = require("../middlewares/auth");
 const { checkRole } = require("../middlewares/auth");
 // const { singleUpload } = require("../middlewares/diskUpload");
-const memoryUpload = require("../middlewares/memoryUpload");
+const { memoryUpload, errorHandler } = require("../middlewares/memoryUpload");
 
 const productsRouter = Router();
 
@@ -14,7 +14,10 @@ productsRouter.post(
   "/",
   checkToken,
   checkRole,
-  memoryUpload.single("image"),
+  (req, res, next) =>
+    memoryUpload.single("image")(req, res, (err) => {
+      errorHandler(err, res, next);
+    }),
   productsController.insertProducts
 );
 productsRouter.patch(
