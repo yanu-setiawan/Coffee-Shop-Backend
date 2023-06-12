@@ -20,11 +20,17 @@
 
 ## Built With
 
-<p align="center">
+<!-- <p align="center">
   <a href="https://skillicons.dev">
     <img src="https://skillicons.dev/icons?i=nodejs,express,postgres,vercel,mongo" />
   </a>
-</p>
+</p> -->
+*   [NodeJS](https://nodejs.org/)
+*   [ExpressJS](https://expressjs.com/)
+*   [Postgresql](https://www.postgresql.org/)
+*   [MongoDB](https://www.mongodb.com)
+*   [JWT](https://github.com/auth0/node-jsonwebtoken)
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -112,7 +118,7 @@ $ npm run dev
 | Endpoint                       |      Method      | Info         | Remark                                |
 | ----------------------------   | :--------------: | :----------- | :------------------------------------ |
 | /api/auth                      |      `POST`      | Auth         | Login                                 |
-| /api/auth/logout               |      `DELETE`    | Auth         | LOGOUT                                |
+| /api/auth/logout               |      `DELETE`    | Auth         | LogoutT                                |
 | /api/users                     |      `GET`       | User         | Get Users (admin)                     |
 | /api/users                     |      `POST`      | Auth         | Register                              |
 | /api/users/editPWD/:id         |      `POST`      | User         | Change Password                       |
