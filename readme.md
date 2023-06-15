@@ -112,11 +112,6 @@ CLOUD_SECRET = "YOUR KEY SECRET CLOUD "
 $ npm run dev
 ```
 
-## Related Projects
-
-[Coffee-Shop Website](https://github.com/yanu-setiawan/Coffee-Shop-React-App)
-
-[Coffee-Shop Mobile](https://github.com/yanu-setiawan/Coffee-Shop-Mobile)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -145,6 +140,13 @@ $ npm run dev
 ## 𓆙 Documentation Postman
 
 Click here [POSTMAN](https://documenter.getpostman.com/view/26100678/2s93m62Mkp)
+
+## 𓆙 Related Projects
+
+[Coffee-Shop Website](https://github.com/yanu-setiawan/Coffee-Shop-React-App)
+
+[Coffee-Shop Mobile](https://github.com/yanu-setiawan/Coffee-Shop-Mobile)
+
 
 ## 𓆙 License
 
