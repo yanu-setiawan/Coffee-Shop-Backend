@@ -18,13 +18,32 @@
   </p>
 </div>
 
+## 𓆙 Table of Contents
+
+
+
+- [About](#𓆙-About)
+- [Build With](#𓆙-Build-With)
+- [Requirement](#𓆙-Requirement)
+- [Installation](#)
+  - [Windows](#𓆙-Windows-Installation)
+  - [Linux](#𓆙_Linux_Installation)
+- [How to run](#𓆙-How-to-run)
+- [Route](#𓆙-Documentation-Postman)
+- [Documentation Postman](#𓆙-Documentation-Postman)
+- [Related Projects](#𓆙-Related-Projects)
+- [License](#license)
+- [Report Bug](#report-bug)
+
+## 𓆙 About
+
+Coffee Shop REST API is a backend server implementation designed for a coffee shop using the Express framework. It provides a robust and scalable solution for managing various aspects of a coffee shop's operations, such as menu items, orders, customer information, and more.
+
+The REST API follows the principles of Representational State Transfer (REST), which enables easy integration with various clients, including web and mobile applications. It utilizes the HTTP protocol for communication, allowing clients to perform operations such as retrieving, creating, updating, and deleting resources.
+
+
 ## 𓆙 Built With
 
-<!-- <p align="center">
-  <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=nodejs,express,postgres,vercel,mongo" />
-  </a>
-</p> -->
 *   [NodeJS](https://nodejs.org/)
 *   [ExpressJS](https://expressjs.com/)
 *   [Postgresql](https://www.postgresql.org/)
@@ -34,18 +53,6 @@
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## 𓆙 Table of Contents
-
-
-- [Table of Contents](#𓆙-Table-of-Contents)
-- [Requirement](#𓆙-Requirement)
-- [Installation](#)
-  - [Windows](#𓆙-Windows-Installation)
-  - [Linux](#𓆙_Linux_Installation)
-- [How to run](#𓆙-How-to-run)
-- [Related Projects](#𓆙-Related-Projects)
-- [Route](#𓆙-Documentation-Postman)
-- [Documentation Postman](#𓆙-Documentation-Postman)
 
 ## 𓆙 Requirement
 
@@ -118,7 +125,7 @@ $ npm run dev
 | Endpoint                       |      Method      | Info         | Remark                                |
 | ----------------------------   | :--------------: | :----------- | :------------------------------------ |
 | /api/auth                      |      `POST`      | Auth         | Login                                 |
-| /api/auth/logout               |      `DELETE`    | Auth         | LogoutT                                |
+| /api/auth/logout               |      `DELETE`    | Auth         | Logout                                |
 | /api/users                     |      `GET`       | User         | Get Users (admin)                     |
 | /api/users                     |      `POST`      | Auth         | Register                              |
 | /api/users/editPWD/:id         |      `POST`      | User         | Change Password                       |
@@ -139,7 +146,16 @@ $ npm run dev
 
 Click here [POSTMAN](https://documenter.getpostman.com/view/26100678/2s93m62Mkp)
 
+## 𓆙 License
+
+This project is licensed under the ISC License. See the [LICENSE](LICENSE) file for details.
+
+## 𓆙 Report Bug
+
+Any error report you can pull request
+or contact: <yanusetiawan363@gmail.com>
 <BR>
 <BR>
+
 
 <p align="center"> <samp><i>&copy; yanusetiawan </i></samp> </p>
