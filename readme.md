@@ -24,7 +24,6 @@
 
 - [About](#𓆙-About)
 - [Build With](#𓆙-Build-With)
-- [Requirement](#𓆙-Requirement)
 - [Installation](#)
   - [Windows](#𓆙-Windows-Installation)
   - [Linux](#𓆙_Linux_Installation)
@@ -53,12 +52,6 @@ The REST API follows the principles of Representational State Transfer (REST), w
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-## 𓆙 Requirement
-
-This repo require a [NodeJS](https://nodejs.org/)
-
-[ENV](#ENV) File
 
 ## 𓆙 Windows Installation
 
