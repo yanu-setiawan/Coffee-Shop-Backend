@@ -10,11 +10,12 @@
   <h2 align="center">Coffee Shop</h2>
 
   <p align="center">
-    <a href="https://documenter.getpostman.com/view/26100678/2s93m62Mkp">Postman Documentation</a>
+   <a href="https://coffee-shop-react-app-tawny.vercel.app/">View Demo</a>
+    ·
+    <a href="https://documenter.getpostman.com/view/26100678/2s93m62Mkp">Doc.Postman</a>
     ·
     <a href="#">Report Bug</a>
-    ·
-    <a href="#">Request Feature</a>
+    
   </p>
 </div>
 
@@ -23,6 +24,7 @@
 
 
 - [About](#𓆙-About)
+- [Demo](#𓆙-Demo)
 - [Build With](#𓆙-Build-With)
 - [Installation](#)
   - [Windows](#𓆙-Windows-Installation)
@@ -39,6 +41,11 @@
 Coffee Shop REST API is a backend server implementation designed for a coffee shop using the Express framework. It provides a robust and scalable solution for managing various aspects of a coffee shop's operations, such as menu items, orders, customer information, and more.
 
 The REST API follows the principles of Representational State Transfer (REST), which enables easy integration with various clients, including web and mobile applications. It utilizes the HTTP protocol for communication, allowing clients to perform operations such as retrieving, creating, updating, and deleting resources.
+
+## 𓆙 Demo 
+ [Click Here](https://coffee-shop-react-app-tawny.vercel.app/)
+
+
 
 
 ## 𓆙 Built With
