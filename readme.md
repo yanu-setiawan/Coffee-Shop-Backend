@@ -10,7 +10,7 @@
   <h2 align="center">Coffee Shop</h2>
 
   <p align="center">
-   <a href="https://coffee-shop-react-app-tawny.vercel.app/">View Demo</a>
+   <a href="https://coffee-shop-123.vercel.app/">View Demo</a>
     ·
     <a href="https://documenter.getpostman.com/view/26100678/2s93m62Mkp">Doc.Postman</a>
     ·
@@ -43,7 +43,7 @@ Coffee Shop REST API is a backend server implementation designed for a coffee sh
 The REST API follows the principles of Representational State Transfer (REST), which enables easy integration with various clients, including web and mobile applications. It utilizes the HTTP protocol for communication, allowing clients to perform operations such as retrieving, creating, updating, and deleting resources.
 
 ## 𓆙 Demo 
- [Click Here](https://coffee-shop-react-app-tawny.vercel.app/)
+ [Click Here](https://coffee-shop-123.vercel.app/)
 
 
 
